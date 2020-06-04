@@ -10,7 +10,7 @@
     "lint": "eslint .",
     "ga": "git add .",
     "gcm": "git commit -m 'update'",
-    "gpu": "git push"
+    "gpu": "git push SSR_Mob"
   },
   "dependencies": {
     "@react-native-community/art": "^1.2.0",

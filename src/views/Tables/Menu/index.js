@@ -4,7 +4,7 @@ import {SafeAreaView, View, FlastList, Text} from 'react-native';
 function Menu(props) {
   return (
     <SafeAreaView>
-      <Text>Menu</Text>
+      <Text>this is menu</Text>
     </SafeAreaView>
   );
 }
