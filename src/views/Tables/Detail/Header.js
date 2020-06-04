@@ -2,12 +2,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {View, Text, StyleSheet} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome5';
-
 import * as Progress from 'react-native-progress';
-
 import 'intl';
 import 'intl/locale-data/jsonp/vi-VN';
+
 HeaderDetail.propTypes = {};
 
 function HeaderDetail(props) {
