@@ -3,7 +3,7 @@ import {StyleSheet, Dimensions} from 'react-native';
 import * as fontSize from '../../../utils/fontSize';
 import color from '../../../utils/Color';
 
-const windowWith = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
   container: {
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   },
   //header=======================================================================================
   headerContainer: {
-    height: (windowWith * 3) / 4,
+    height: 0.35 * windowHeight,
   },
   headerDetailContainer: {
     flex: 0.8,

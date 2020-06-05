@@ -20,7 +20,7 @@ function Header(props) {
         <Text style={styles.desc}>Tổng Tiền</Text>
 
         <View style={{flexDirection: 'row'}}>
-          <NumberText text={value} style={styles.money} />
+          <NumberText value={value} style={styles.money} />
           <Text style={styles.money}>VNĐ</Text>
         </View>
       </View>

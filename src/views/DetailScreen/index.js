@@ -18,23 +18,10 @@ function Detail({route, navigation: {goBack, navigate}}) {
     navigate('Menu', {handleMenuBack});
   };
   const handleMenuBack = (item) => {
-    item.done = 0;
-    item.quantity = 1;
-    item.served = 0;
-    item.totalPrice = item.price;
     let tempData = [...menu];
     tempData.push(item);
     setMenu(tempData);
     // console.log(tempData);
-    console.log(menu);
-  };
-
-  const onIncrease = (itemID) => {
-    console.log(itemID);
-  };
-
-  const onDecrease = (itemID) => {
-    console.log(itemID);
   };
 
   const onDelete = (itemID) => {
@@ -64,8 +51,6 @@ function Detail({route, navigation: {goBack, navigate}}) {
           renderItem={({item, separators}) => (
             <ItemBill
               item={item}
-              onIncrease={onIncrease}
-              onDecrease={onDecrease}
               onDelete={onDelete}
               onShowUnderlay={separators.highlight}
               onHideUnderlay={separators.unhighlight}

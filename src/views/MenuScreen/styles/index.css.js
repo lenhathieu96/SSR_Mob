@@ -1,7 +1,9 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Dimensions} from 'react-native';
 
 import * as fontSize from '../../../utils/fontSize';
 import color from '../../../utils/Color';
+
+const height = 0.7 * Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
   //menu style
@@ -12,18 +14,11 @@ const styles = StyleSheet.create({
   //search bar
   input: {
     padding: 10,
-    fontSize: 18,
+    fontSize: fontSize.larger,
     fontFamily: 'MavenPro-Regular',
     borderColor: color.unactive,
-    borderWidth: 1,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
   },
   menuBody: {
     flex: 1,
@@ -44,11 +39,11 @@ const styles = StyleSheet.create({
     borderColor: color.unactive,
   },
   itemName: {
-    fontSize: fontSize.large,
+    fontSize: fontSize.larger,
     flex: 1,
   },
   itemPrice: {
-    fontSize: fontSize.large,
+    fontSize: fontSize.larger,
   },
   //=============================================================================================
   //bottom sheet styles
@@ -63,6 +58,20 @@ const styles = StyleSheet.create({
     backgroundColor: color.bg,
     flexGrow: 1,
     padding: 10,
+    height,
+  },
+  bottomSheetTitle: {
+    fontSize: fontSize.larger,
+    flex: 0.7,
+  },
+  bottomSheetNumber: {
+    fontSize: fontSize.larger,
+    fontWeight: 'bold',
+    color: color.secondary,
+  },
+  btnAdd: {
+    backgroundColor: color.add,
+    marginBottom: 10,
   },
 });
 export default styles;

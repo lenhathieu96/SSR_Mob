@@ -2,19 +2,20 @@ import React, {useEffect, useState, useRef} from 'react';
 import {
   SafeAreaView,
   View,
-  FlastList,
   TextInput,
   FlatList,
   ActivityIndicator,
-  TouchableOpacity,
   Dimensions,
+  KeyboardAvoidingView,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+
 import BottomSheet from 'reanimated-bottom-sheet';
 // import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 
 import Text from '../../Components/Text';
+import IconButton from '../../Components/IconButton';
+
 import BottomSheetBody from './BottomSheetBody';
 import Item from './Item';
 import serverURL from '../../Connect/ServerURL';
@@ -28,7 +29,7 @@ function Menu({route, navigation: {goBack, navigate}}) {
   const [currentFood, setCurrentFood] = useState({});
 
   const URL = serverURL + 'food';
-  const height = (3 * Dimensions.get('window').height) / 4;
+  const height = 0.7 * Dimensions.get('window').height;
 
   const fetchData = () => {
     setLoading(true);
@@ -65,10 +66,30 @@ function Menu({route, navigation: {goBack, navigate}}) {
     food.quantity = 1;
     food.served = 0;
     food.totalPrice = food.price;
+    food.note = '';
     setCurrentFood(food);
     bottomsheetRef.current.snapTo(0);
-    // goBack();
-    // route.params.handleMenuBack(food);
+  };
+
+  const onIncreaseFood = () => {
+    const food = {...currentFood};
+    food.quantity++;
+    food.totalPrice = food.price * food.quantity;
+    setCurrentFood(food);
+  };
+
+  const onDecreaseFood = () => {
+    const food = {...currentFood};
+    food.quantity--;
+    food.totalPrice = food.price * food.quantity;
+    setCurrentFood(food);
+  };
+
+  const onAddNewFood = (note) => {
+    const food = {...currentFood};
+    food.note = note;
+    goBack();
+    route.params.handleMenuBack(food);
   };
 
   useEffect(() => {
@@ -76,45 +97,55 @@ function Menu({route, navigation: {goBack, navigate}}) {
   }, []);
 
   return (
-    <SafeAreaView style={styles.menuContainer}>
-      <TextInput
-        placeholder="Nhập Món Cần Tìm"
-        onChangeText={(text) => search(text)}
-        style={styles.input}
-      />
-      <View style={styles.menuBody}>
-        {isLoading ? (
-          <View style={{alignSelf: 'center'}}>
-            <ActivityIndicator animating={true} />
-            <Text style={styles.loadingText}>Đang Tải Dữ Liệu</Text>
-          </View>
-        ) : (
-          <FlatList
-            data={menu}
-            keyExtractor={(item) => item._id}
-            renderItem={({item}) => (
-              <Item data={item} selectItem={selectItem} />
-            )}
-            refreshing={isLoading}
-            onRefresh={() => fetchData()}
-          />
-        )}
-        <BottomSheet
-          ref={bottomsheetRef}
-          snapPoints={[height, 250, 0]}
-          renderHeader={() => (
-            <TouchableOpacity
-              style={styles.bottomSheetHeader}
-              onPress={() => bottomsheetRef.current.snapTo(2)}>
-              <Icon name="times" size={28} />
-            </TouchableOpacity>
-          )}
-          renderContent={() => <BottomSheetBody food={currentFood} />}
-          initialSnap={1}
-          enabledInnerScrolling={false}
+    <KeyboardAvoidingView style={{flex: 1}}>
+      <SafeAreaView style={styles.menuContainer}>
+        <TextInput
+          placeholder="Nhập Món Cần Tìm"
+          onChangeText={(text) => search(text)}
+          style={styles.input}
         />
-      </View>
-    </SafeAreaView>
+        <View style={styles.menuBody}>
+          {isLoading ? (
+            <View style={{alignSelf: 'center'}}>
+              <ActivityIndicator animating={true} />
+              <Text style={styles.loadingText}>Đang Tải Dữ Liệu</Text>
+            </View>
+          ) : (
+            <FlatList
+              data={menu}
+              keyExtractor={(item) => item._id}
+              renderItem={({item}) => (
+                <Item data={item} selectItem={selectItem} />
+              )}
+              refreshing={isLoading}
+              onRefresh={() => fetchData()}
+            />
+          )}
+          <BottomSheet
+            ref={bottomsheetRef}
+            snapPoints={[height, 250, 0]}
+            renderHeader={() => (
+              <View style={styles.bottomSheetHeader}>
+                <IconButton
+                  iconName="grip-lines"
+                  onPress={() => bottomsheetRef.current.snapTo(2)}
+                />
+              </View>
+            )}
+            renderContent={() => (
+              <BottomSheetBody
+                food={currentFood}
+                onIncreaseFood={onIncreaseFood}
+                onDecreaseFood={onDecreaseFood}
+                onAddNewFood={onAddNewFood}
+              />
+            )}
+            initialSnap={2}
+            enabledInnerScrolling={false}
+          />
+        </View>
+      </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 }
 

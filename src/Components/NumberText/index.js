@@ -10,13 +10,13 @@ NumberText.propTypes = {
   style: PropTypes.object,
 };
 
-function NumberText({text, style, ...otherProps}) {
+function NumberText({value, style, ...otherProps}) {
   return (
     <Text
       style={[styles.fontSkin, style]}
       allowFontScaling={false}
       {...otherProps}>
-      {new Intl.NumberFormat('vi-VN').format(text)}
+      {new Intl.NumberFormat('vi-VN').format(value)}
     </Text>
   );
 }

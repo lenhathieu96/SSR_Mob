@@ -18,7 +18,7 @@ function Item(props) {
       style={styles.menuItemContainer}
       onPress={() => selectItem(data._id)}>
       <Text text={data.name} style={styles.itemName} />
-      <NumberText text={data.price} style={styles.itemPrice} />
+      <NumberText value={data.price} style={styles.itemPrice} />
     </TouchableOpacity>
   );
 }
