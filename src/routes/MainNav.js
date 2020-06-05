@@ -1,7 +1,7 @@
 import React from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import DashBoardStack from './DashboardStack';
-import Detail from '../views/Tables/Detail';
+import DetailScreen from '../views/DetailScreen';
 
 const MainDrawer = createDrawerNavigator();
 
@@ -17,7 +17,7 @@ function MainNavigation() {
       />
       <MainDrawer.Screen
         name="Detail"
-        component={Detail}
+        component={DetailScreen}
         options={{
           title: 'Hỗ Trợ',
         }}

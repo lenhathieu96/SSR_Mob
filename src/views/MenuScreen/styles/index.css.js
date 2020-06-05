@@ -1,4 +1,8 @@
 import {StyleSheet} from 'react-native';
+
+import * as fontSize from '../../../utils/fontSize';
+import color from '../../../utils/Color';
+
 const styles = StyleSheet.create({
   //menu style
   menuContainer: {
@@ -10,7 +14,7 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 18,
     fontFamily: 'MavenPro-Regular',
-    borderColor: 'rgba(0, 0, 1, 0.151)',
+    borderColor: color.unactive,
     borderWidth: 1,
     shadowColor: '#000',
     shadowOffset: {
@@ -26,8 +30,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   loadingText: {
-    fontFamily: 'MavenPro-Regular',
-    fontSize: 18,
+    fontSize: fontSize.large,
     marginTop: 10,
   },
   //=============================================================================================
@@ -38,11 +41,28 @@ const styles = StyleSheet.create({
     padding: 10,
     marginTop: 10,
     borderBottomWidth: 1,
-    borderColor: 'rgba(0, 0, 1, 0.151)',
+    borderColor: color.unactive,
   },
-  desc: {
-    fontSize: 18,
-    fontFamily: 'MavenPro-Regular',
+  itemName: {
+    fontSize: fontSize.large,
+    flex: 1,
+  },
+  itemPrice: {
+    fontSize: fontSize.large,
+  },
+  //=============================================================================================
+  //bottom sheet styles
+  bottomSheetHeader: {
+    padding: 10,
+    backgroundColor: color.bg,
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
+    alignItems: 'center',
+  },
+  bottomSheetBody: {
+    backgroundColor: color.bg,
+    flexGrow: 1,
+    padding: 10,
   },
 });
 export default styles;

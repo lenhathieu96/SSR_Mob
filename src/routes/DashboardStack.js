@@ -3,18 +3,18 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import Dashboard from '../views/Tables/index';
-import Detail from '../views/Tables/Detail/index';
-import Menu from '../views/Tables/Menu/index';
+import TablesScreen from '../views/TablesScreen';
+import DetailScreen from '../views/DetailScreen';
+import MenuScreen from '../views/MenuScreen';
 
 const dashboardStack = createStackNavigator();
 
 function DashboardStack() {
   return (
-    <dashboardStack.Navigator initialRouteName="dashboard">
+    <dashboardStack.Navigator initialRouteName="tables">
       <dashboardStack.Screen
-        name="dashboard"
-        component={Dashboard}
+        name="tables"
+        component={TablesScreen}
         options={({navigation}) => ({
           title: 'Danh Sách Phòng Bàn',
           headerStyle: {
@@ -40,7 +40,7 @@ function DashboardStack() {
 
       <dashboardStack.Screen
         name="Detail"
-        component={Detail}
+        component={DetailScreen}
         options={{
           headerShown: false,
         }}
@@ -48,7 +48,7 @@ function DashboardStack() {
 
       <dashboardStack.Screen
         name="Menu"
-        component={Menu}
+        component={MenuScreen}
         options={({navigation}) => ({
           title: 'Danh Sách Món',
           headerStyle: {

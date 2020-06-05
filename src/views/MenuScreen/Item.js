@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {TouchableOpacity, Text} from 'react-native';
-import 'intl';
-import 'intl/locale-data/jsonp/vi-VN';
+import {TouchableOpacity} from 'react-native';
 
-import styles from './index.css';
+import Text from '../../Components/Text';
+import NumberText from '../../Components/NumberText';
+import styles from './styles/index.css';
 
 Item.propTypes = {
   data: PropTypes.object.isRequired,
@@ -17,10 +17,8 @@ function Item(props) {
     <TouchableOpacity
       style={styles.menuItemContainer}
       onPress={() => selectItem(data._id)}>
-      <Text style={[styles.desc, {flex: 1}]}>{data.name}</Text>
-      <Text style={styles.desc}>
-        {new Intl.NumberFormat('vi-VN').format(data.price)}
-      </Text>
+      <Text text={data.name} style={styles.itemName} />
+      <NumberText text={data.price} style={styles.itemPrice} />
     </TouchableOpacity>
   );
 }
