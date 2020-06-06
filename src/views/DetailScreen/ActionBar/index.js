@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {View, TouchableOpacity, Text, StyleSheet} from 'react-native';
+import {View, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 import {BoldText} from '../../../Components/Text';
@@ -14,6 +14,7 @@ ActionBar.propTypes = {
 
 function ActionBar(props) {
   const {index, handleGoBack} = props;
+
   return (
     <View style={styles.actionBarContainer}>
       <TouchableOpacity

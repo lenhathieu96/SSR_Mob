@@ -62,13 +62,21 @@ const styles = StyleSheet.create({
   },
   bottomSheetTitle: {
     fontSize: fontSize.larger,
-    flex: 0.7,
+    flex: 0.5,
+    textAlign: 'center',
   },
   bottomSheetNumber: {
     fontSize: fontSize.larger,
     fontWeight: 'bold',
     color: color.secondary,
+    textAlign: 'center',
+    flex: 0.5,
   },
+
+  btnQuantity: {
+    alignItems: 'center',
+  },
+
   btnAdd: {
     backgroundColor: color.add,
     marginBottom: 10,

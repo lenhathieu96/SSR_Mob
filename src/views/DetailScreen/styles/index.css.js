@@ -11,13 +11,24 @@ const styles = StyleSheet.create({
     display: 'flex',
     backgroundColor: color.primary,
   },
+  headerContainer: {
+    height: 0.38 * windowHeight,
+  },
+  bodyContainer: {
+    flex: 1,
+    backgroundColor: 'white',
+    marginTop: -25,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    padding: 10,
+  },
   //Action Bar=======================================================================================
   actionBarContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingTop: 10,
     paddingBottom: 10,
-    flex: 0.1,
+    height: 50,
   },
   actionBarTitle: {
     fontSize: 22,
@@ -30,27 +41,32 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   //header=======================================================================================
-  headerContainer: {
-    height: 0.35 * windowHeight,
+  headerEmptyContainer: {
+    flex: 0.9,
+    paddingLeft: 10,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   headerDetailContainer: {
-    flex: 0.8,
-    padding: 10,
+    flex: 0.9,
+    paddingLeft: 10,
     flexDirection: 'column',
-    justifyContent: 'space-evenly',
+    justifyContent: 'flex-start',
   },
   desc: {
     color: 'white',
-    fontSize: fontSize.large,
+    fontSize: fontSize.larger,
   },
   moneyContainer: {
+    padding: 5,
     flexDirection: 'column',
     justifyContent: 'space-evenly',
   },
   money: {
     fontWeight: 'bold',
     color: color.secondary,
-    fontSize: fontSize.biggest,
+    fontSize: fontSize.bigger,
     padding: 5,
   },
   progressContainer: {
@@ -72,18 +88,23 @@ const styles = StyleSheet.create({
     fontSize: fontSize.large,
     marginRight: 10,
   },
+  // progressTitle: {
+  //   fontSize: fontSize.huge,
+  //   color: 'white',
+  // },
+  // progressDetail: {
+  //   color: color.secondary,
+  //   fontSize: fontSize.larger,
+  //   marginRight: 10,
+  // },
 
   //=============================================================================================
-  bodyContainer: {
+  billList: {
+    flexGrow: 1,
     flex: 1,
-    backgroundColor: 'white',
-    marginTop: -25,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    padding: 10,
   },
-
   emptyListContainer: {
+    padding: 10,
     alignItems: 'center',
     flexGrow: 1,
     justifyContent: 'center',
@@ -91,6 +112,43 @@ const styles = StyleSheet.create({
   emptyListTitle: {
     color: color.primary,
     fontSize: fontSize.huge,
+  },
+  //=============================================================================================
+  itemBillContainer: {
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    padding: 10,
+  },
+  itemBillDesc: {
+    fontSize: fontSize.larger,
+    flex: 0.5,
+  },
+  itemBillDesc__done: {
+    fontSize: fontSize.larger,
+    flex: 0.5,
+    color: color.add,
+  },
+  itemBillQuantity: {
+    fontSize: fontSize.larger,
+    flex: 0.2,
+  },
+  itemBillPrice: {
+    fontWeight: 'bold',
+    fontSize: fontSize.larger,
+    color: color.secondary,
+    flex: 0.3,
+  },
+  itemBillNote: {
+    fontStyle: 'italic',
+    fontSize: fontSize.normal,
+    marginTop: 10,
+  },
+  btnDelete: {
+    alignItems: 'flex-end',
+  },
+  btncreateBill: {
+    backgroundColor: color.primary,
+    marginBottom: 10,
   },
 });
 export default styles;

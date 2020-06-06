@@ -1,41 +1,43 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {View, StyleSheet} from 'react-native';
+import {View, Dimensions} from 'react-native';
 import Text from '../../../Components/Text';
 import NumberText from '../../../Components/NumberText';
 import IconButton from '../../../Components/IconButton';
 
+import * as Progress from 'react-native-progress';
+
+import * as fontSize from '../../../utils/fontSize';
+
+import styles from '../styles/index.css';
+import color from '../../../utils/Color';
+
 ItemBill.propTypes = {
   item: PropTypes.object.isRequired,
-  onDelete: PropTypes.func.isRequired,
+  onDeleteItem: PropTypes.func.isRequired,
 };
 
 function ItemBill(props) {
-  const {item, onDelete} = props;
-  console.log(item);
+  const {item, onDeleteItem} = props;
   return (
-    <View>
-      <View style={styles.itemBillContainer}>
-        <Text text={item.name} />
-        <NumberText value={item.quantity} />
-        <Text text={item.note} />
+    <View style={styles.itemBillContainer}>
+      <View style={{flexDirection: 'row'}}>
+        <Text text={item.name} style={styles.itemBillDesc} />
+        <NumberText value={item.quantity} style={styles.itemBillQuantity} />
+        <NumberText value={item.totalPrice} style={styles.itemBillPrice} />
+        <IconButton
+          style={styles.btnDelete}
+          iconName="trash"
+          iconSize={fontSize.huge}
+          onPress={() => onDeleteItem(item._id)}
+        />
       </View>
+      <Text text={item.note} style={styles.itemBillNote} />
+      <Progress.Bar progress={0.9} color={color.secondary} width={0.9*Dimensions.get('window').width} height={fontSize.large}>
+<Text style={{alignSelf:"center",position:"absolute",top:0.5}}>2/4</Text>
+</Progress.Bar>
     </View>
   );
 }
 
 export default ItemBill;
-
-const styles = StyleSheet.create({
-  itemBillContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    fontFamily: 'MavenPro-Regular',
-    fontSize: 18,
-  },
-  desc: {
-    fontSize: 18,
-    fontFamily: 'MavenPro-Regular',
-  },
-});

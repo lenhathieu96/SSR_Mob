@@ -1,49 +1,28 @@
 import React from 'react';
 
-import {TouchableOpacity, Text, StyleSheet, Dimensions} from 'react-native';
+import {TouchableOpacity} from 'react-native';
+import {BoldText} from '../../../Components/Text';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
-const windowWidth = Dimensions.get('window').width;
-const containerSize = windowWidth > 850 ? 0.3 * windowWidth : 0.4 * windowWidth;
+import styles from '../styles/index.css';
 
 function Table(props) {
-  const {index} = props;
+  const {data} = props;
   const navigation = useNavigation();
+
   return (
     <TouchableOpacity
-      style={styles.container}
-      onPress={() => navigation.navigate('Detail', {tableIndex: index + 1})}>
+      style={
+        Object.keys(data).length > 1
+          ? styles.itemTableContainer__used
+          : styles.itemTableContainer
+      }
+      onPress={() => navigation.navigate('Detail', {data})}>
       <Icon name="utensils" style={styles.icon} />
-      <Text style={styles.title}>Bàn {index + 1}</Text>
+      <BoldText style={styles.title}>Bàn {data.Table}</BoldText>
     </TouchableOpacity>
   );
 }
 
 export default Table;
-
-const styles = StyleSheet.create({
-  container: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    margin: 10,
-    borderRadius: 20,
-    borderColor: 'rgba(0, 0, 1, 0.151)',
-    borderWidth: 1,
-    height: containerSize,
-    width: containerSize,
-  },
-
-  icon: {
-    color: '#283593',
-    fontSize: 48,
-  },
-
-  title: {
-    fontFamily: 'MavenPro-Regular',
-    fontSize: 24,
-    color: '#283593',
-    fontWeight: 'bold',
-  },
-});

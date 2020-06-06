@@ -1,7 +1,10 @@
 import React from 'react';
+import {View, FlatList, Dimensions} from 'react-native';
 import PropTypes from 'prop-types';
-import {View, FlatList, StyleSheet, Dimensions} from 'react-native';
+
 import Table from './Table';
+
+import styles from '../styles/index.css';
 
 TableList.propTypes = {
   data: PropTypes.array.isRequired,
@@ -16,8 +19,8 @@ function TableList(props) {
       <FlatList
         numColumns={windowWidth > 850 ? 3 : 2}
         data={data}
-        renderItem={({item, index}) => <Table index={index} />}
-        keyExtractor={(item, index) => index}
+        renderItem={({item}) => <Table data={item} />}
+        keyExtractor={(item) => item.Table}
         contentContainerStyle={styles.flastlist}
       />
     </View>
@@ -25,10 +28,3 @@ function TableList(props) {
 }
 
 export default TableList;
-
-const styles = StyleSheet.create({
-  flastlist: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

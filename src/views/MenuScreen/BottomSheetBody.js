@@ -7,6 +7,8 @@ import Text from '../../Components/Text';
 import NumberText from '../../Components/NumberText';
 import TextButton from '../../Components/TextButton';
 
+import * as fontSize from '../../utils/fontSize';
+
 import styles from './styles/index.css';
 
 BottomSheetBody.propTypes = {};
@@ -34,17 +36,21 @@ function BottomSheetBody(props) {
               alignItems: 'center',
             }}>
             <IconButton
+              style={styles.btnQuantity}
               iconName="minus-circle"
               onPress={() => onDecreaseFood()}
               disabled={food.quantity === 1 ? true : false}
+              iconSize={fontSize.biggest}
             />
             <NumberText
               value={food.quantity}
               style={styles.bottomSheetNumber}
             />
             <IconButton
+              style={styles.btnQuantity}
               iconName="plus-circle"
               onPress={() => onIncreaseFood()}
+              iconSize={fontSize.biggest}
             />
           </View>
           <TextInput

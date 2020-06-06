@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 
 import BottomSheet from 'reanimated-bottom-sheet';
-// import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 
 import Text from '../../Components/Text';
@@ -19,6 +19,8 @@ import IconButton from '../../Components/IconButton';
 import BottomSheetBody from './BottomSheetBody';
 import Item from './Item';
 import serverURL from '../../Connect/ServerURL';
+
+import * as fontSize from '../../utils/fontSize';
 import styles from './styles/index.css';
 
 function Menu({route, navigation: {goBack, navigate}}) {
@@ -31,20 +33,32 @@ function Menu({route, navigation: {goBack, navigate}}) {
   const URL = serverURL + 'food';
   const height = 0.7 * Dimensions.get('window').height;
 
-  const fetchData = () => {
+  const fetchData = async () => {
     setLoading(true);
-    axios.get(URL).then(async (res) => {
-      if (res.status === 200) {
-        setMenu(res.data);
+    try {
+      const menu = await AsyncStorage.getItem('menu');
+
+      if (menu !== null) {
         setLoading(false);
-        setSourceMenu(res.data);
-        // try {
-        //   await AsyncStorage.setItem('menu', res.data);
-        // } catch (e) {
-        //   console.log(e);
-        // }
+        setSourceMenu(JSON.parse(menu));
+        setMenu(JSON.parse(menu));
+      } else {
+        axios.get(URL).then(async (res) => {
+          if (res.status === 200) {
+            setMenu(res.data);
+            setLoading(false);
+            setSourceMenu(res.data);
+            try {
+              await AsyncStorage.setItem('menu', JSON.stringify(res.data));
+            } catch (e) {
+              console.log(e);
+            }
+          }
+        });
       }
-    });
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const search = (text) => {
@@ -127,6 +141,7 @@ function Menu({route, navigation: {goBack, navigate}}) {
             renderHeader={() => (
               <View style={styles.bottomSheetHeader}>
                 <IconButton
+                  iconSize={fontSize.huge}
                   iconName="grip-lines"
                   onPress={() => bottomsheetRef.current.snapTo(2)}
                 />
