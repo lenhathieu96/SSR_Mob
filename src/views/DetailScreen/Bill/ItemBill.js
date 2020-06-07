@@ -14,11 +14,12 @@ import color from '../../../utils/Color';
 
 ItemBill.propTypes = {
   item: PropTypes.object.isRequired,
-  onDeleteItem: PropTypes.func.isRequired,
+  created: PropTypes.bool.isRequired,
+  onDeleteItem: PropTypes.func,
 };
 
 function ItemBill(props) {
-  const {item, onDeleteItem} = props;
+  const {item, created, onDeleteItem} = props;
   return (
     <View style={styles.itemBillContainer}>
       <View style={{flexDirection: 'row'}}>
@@ -33,9 +34,15 @@ function ItemBill(props) {
         />
       </View>
       <Text text={item.note} style={styles.itemBillNote} />
-      <Progress.Bar progress={0.9} color={color.secondary} width={0.9*Dimensions.get('window').width} height={fontSize.large}>
-<Text style={{alignSelf:"center",position:"absolute",top:0.5}}>2/4</Text>
-</Progress.Bar>
+      <Progress.Bar
+        progress={0.9}
+        color={color.secondary}
+        width={0.9 * Dimensions.get('window').width}
+        height={fontSize.large}>
+        <Text style={{alignSelf: 'center', position: 'absolute', top: 0.5}}>
+          2/4
+        </Text>
+      </Progress.Bar>
     </View>
   );
 }

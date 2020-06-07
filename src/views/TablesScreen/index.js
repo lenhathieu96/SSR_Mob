@@ -7,20 +7,24 @@ import socket from '../../Connect/SocketIO';
 const Tab = createMaterialTopTabNavigator();
 
 function Dashboard() {
+  const tables = new Array(30)
+    .fill({})
+    .map((item, index) => ({...item, Table: index + 1}));
+
   const [listTable, setListTable] = useState([]);
 
   useEffect(() => {
-    let arr = new Array(30);
-    for (let i = 0; i < arr.length; i++) {
-      arr[i] = {Table: i + 1};
-    }
     socket.emit('allBill');
-    socket.on('allBillResult', async (bills) => {
-      bills.forEach((item) => {
-        const index = item.Table - 1;
-        arr[index] = {...arr[index], ...item};
-      });
-      setListTable(arr);
+    socket.on('allBillResult', (bills) => {
+      console.log('data changed');
+      let tempTables = [...tables];
+      if (bills.length > 0) {
+        for (let item of bills) {
+          let index = item.Table - 1;
+          tempTables[index] = {...tempTables[index], ...item};
+        }
+      }
+      setListTable(tempTables);
     });
   }, []);
 

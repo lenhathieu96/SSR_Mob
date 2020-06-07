@@ -101,7 +101,6 @@ const styles = StyleSheet.create({
   //=============================================================================================
   billList: {
     flexGrow: 1,
-    flex: 1,
   },
   emptyListContainer: {
     padding: 10,
@@ -149,6 +148,14 @@ const styles = StyleSheet.create({
   btncreateBill: {
     backgroundColor: color.primary,
     marginBottom: 10,
+  },
+  btnUpdateBill: {
+    backgroundColor: color.secondary,
+    flex: 0.4,
+  },
+  btnChangeTable: {
+    backgroundColor: color.add,
+    flex: 0.4,
   },
 });
 export default styles;

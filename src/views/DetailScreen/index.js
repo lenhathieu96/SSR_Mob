@@ -12,10 +12,12 @@ import socket from '../../Connect/SocketIO';
 
 import styles from './styles/index.css';
 import EmptyHeader from './Header/EmptyHeader';
+import Loader from '../../Components/Loader';
 
 function Detail({route, navigation: {goBack, navigate}}) {
   const {data} = route.params;
 
+  const [loading, setLoading] = useState(false);
   const [bill, setBill] = useState(
     Object.keys(data).length > 1 ? data.Order : [],
   );
@@ -27,6 +29,7 @@ function Detail({route, navigation: {goBack, navigate}}) {
   };
 
   const onCreateBill = () => {
+    setLoading(true);
     let newBill = {
       Order: bill,
       Table: data.Table,
@@ -34,6 +37,7 @@ function Detail({route, navigation: {goBack, navigate}}) {
     };
     socket.emit('createBill', newBill);
     socket.on('createBillResult', (result) => {
+      setLoading(false);
       if (result) {
         navigate('tables');
       }
@@ -70,12 +74,11 @@ function Detail({route, navigation: {goBack, navigate}}) {
         <FlatList
           contentContainerStyle={styles.billList}
           data={bill}
-          renderItem={({item, separators}) => (
+          renderItem={({item}) => (
             <ItemBill
               item={item}
               onDeleteItem={onDeleteItem}
-              onShowUnderlay={separators.highlight}
-              onHideUnderlay={separators.unhighlight}
+              created={data.hasOwnProperty('Created') ? true : false}
             />
           )}
           keyExtractor={(item) => item._id}
@@ -87,16 +90,16 @@ function Detail({route, navigation: {goBack, navigate}}) {
         {bill.length === 0 ? (
           <View />
         ) : data.hasOwnProperty('Created') ? (
-          <View style={{flexDirection: 'row'}}>
+          <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
             <TextButton
               text="Cập Nhập"
               onPress={() => console.log('update')}
-              style={styles.btncreateBill}
+              style={styles.btnUpdateBill}
             />
             <TextButton
               text="Chuyển Bàn"
               onPress={() => console.log('change table')}
-              style={styles.btncreateBill}
+              style={styles.btnChangeTable}
             />
           </View>
         ) : (
@@ -107,6 +110,7 @@ function Detail({route, navigation: {goBack, navigate}}) {
           />
         )}
       </View>
+      {loading ? <Loader /> : null}
     </View>
   );
 }

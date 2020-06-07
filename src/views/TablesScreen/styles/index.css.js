@@ -39,6 +39,13 @@ const styles = StyleSheet.create({
     fontSize: fontSize.huge,
     color: '#283593',
   },
+  TableListContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
   flastlist: {
     alignSelf: 'center',
   },
