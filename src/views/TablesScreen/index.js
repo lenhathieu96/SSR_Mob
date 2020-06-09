@@ -3,17 +3,18 @@ import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs
 
 import TableList from './TableList';
 import socket from '../../Connect/SocketIO';
-
+import color from '../../utils/Color';
 const Tab = createMaterialTopTabNavigator();
 
-function Dashboard() {
-  const tables = new Array(30)
-    .fill({})
-    .map((item, index) => ({...item, Table: index + 1}));
-
+function Dashboard({route}) {
+  const bill_id = route.params;
   const [listTable, setListTable] = useState([]);
 
   useEffect(() => {
+    const tables = new Array(30)
+      .fill({})
+      .map((item, index) => ({...item, Table: index + 1}));
+
     socket.emit('allBill');
     socket.on('allBillResult', (bills) => {
       console.log('data changed');
@@ -28,40 +29,51 @@ function Dashboard() {
     });
   }, []);
 
+  const onChangeTable = (index_table) => {
+    console.log(index_table);
+  };
+
   return (
     <Tab.Navigator
-      initialRouteName="allTable"
+      initialRouteName={!bill_id ? 'allTables' : 'emptyTables'}
       tabBarOptions={{
         tabStyle: {
           opacity: 0.9,
-          backgroundColor: '#283593',
+          backgroundColor: color.primary,
         },
         inactiveTintColor: 'white',
-        activeTintColor: '#e78200',
+        activeTintColor: color.secondary,
         labelStyle: {
           fontFamily: 'MavenPro-Medium',
         },
-        pressColor: '#283593',
+        pressColor: color.primary,
         pressOpacity: 0.9,
       }}>
-      <Tab.Screen
-        name="allTable"
-        options={{
-          title: 'Tất Cả',
-        }}>
-        {() => <TableList data={listTable} />}
-      </Tab.Screen>
-      <Tab.Screen
-        name="servingTables"
-        options={{
-          title: 'Sử Dụng',
-        }}>
-        {() => (
-          <TableList
-            data={listTable.filter((item) => Object.keys(item).length > 1)}
-          />
-        )}
-      </Tab.Screen>
+      {/* all tables */}
+      {!bill_id ? (
+        <Tab.Screen
+          name="allTables"
+          options={{
+            title: 'Tất Cả',
+          }}>
+          {() => <TableList data={listTable} />}
+        </Tab.Screen>
+      ) : null}
+
+      {!bill_id ? (
+        <Tab.Screen
+          name="servingTables"
+          options={{
+            title: 'Sử Dụng',
+          }}>
+          {() => (
+            <TableList
+              data={listTable.filter((item) => Object.keys(item).length > 1)}
+            />
+          )}
+        </Tab.Screen>
+      ) : null}
+
       <Tab.Screen
         name="emptyTables"
         options={{
@@ -70,6 +82,7 @@ function Dashboard() {
         {() => (
           <TableList
             data={listTable.filter((item) => Object.keys(item).length === 1)}
+            onChangeTable={onChangeTable}
           />
         )}
       </Tab.Screen>

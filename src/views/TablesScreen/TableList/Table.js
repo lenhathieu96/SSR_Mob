@@ -8,7 +8,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import styles from '../styles/index.css';
 
 function Table(props) {
-  const {data} = props;
+  const {data, onChangeTable} = props;
   const navigation = useNavigation();
 
   return (

@@ -45,21 +45,21 @@ const styles = StyleSheet.create({
     flex: 0.9,
     paddingLeft: 10,
     flexDirection: 'column',
-    justifyContent: 'center',
+    justifyContent: 'space-evenly',
     alignItems: 'center',
   },
   headerDetailContainer: {
     flex: 0.9,
     paddingLeft: 10,
     flexDirection: 'column',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-evenly',
   },
   desc: {
     color: 'white',
     fontSize: fontSize.larger,
   },
   moneyContainer: {
-    padding: 5,
+    flex: 0.4,
     flexDirection: 'column',
     justifyContent: 'space-evenly',
   },
@@ -70,17 +70,18 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   progressContainer: {
+    flex: 0.4,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-evenly',
   },
   progressDetailContainer: {
     flexDirection: 'column',
-    flex: 1,
+    flex: 0.9,
   },
   progressTitle: {
     flex: 0.8,
-    fontSize: fontSize.larger,
+    fontSize: fontSize.huge,
     color: 'white',
   },
   progressDetail: {
@@ -121,6 +122,7 @@ const styles = StyleSheet.create({
   itemBillDesc: {
     fontSize: fontSize.larger,
     flex: 0.5,
+    color: '#1445A6',
   },
   itemBillDesc__done: {
     fontSize: fontSize.larger,

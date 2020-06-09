@@ -7,19 +7,22 @@ import * as Progress from 'react-native-progress';
 import Text, {BoldText} from '../../../Components/Text';
 import NumberText from '../../../Components/NumberText';
 
+import color from '../../../utils/Color';
 import * as fontSize from '../../../utils/fontSize';
 import styles from '../styles/index.css';
 
 Header.propTypes = {
-  bill: PropTypes.array.isRequired,
+  orders: PropTypes.array.isRequired,
 };
 
 function Header(props) {
-  const {bill} = props;
-  const totalPrice = bill.reduce(
+  const {orders} = props;
+  const totalPrice = orders.reduce(
     (price, order) => (price += order.totalPrice),
     0,
   );
+  const served = orders.filter((order) => order.served === order.quantity)
+    .length;
   return (
     <View style={styles.headerDetailContainer}>
       <View style={styles.moneyContainer}>
@@ -35,18 +38,20 @@ function Header(props) {
           <BoldText style={styles.progressTitle}>Quá Trình Thực Hiện</BoldText>
 
           <View style={{flexDirection: 'row'}}>
-            <Text style={styles.progressDetail}>3/5</Text>
+            <Text style={styles.progressDetail}>
+              {served} / {orders.length}
+            </Text>
             <Text style={styles.desc}>Món đã được phục vụ</Text>
           </View>
         </View>
 
         <Progress.Circle
-          size={90}
-          progress={0.6}
+          size={2.5 * fontSize.biggest}
+          progress={served / orders.length}
           showsText={true}
-          formatText={() => '65%'}
+          formatText={() => Math.round((served / orders.length) * 100) + ' % '}
           textStyle={{color: 'white', fontFamily: 'MavenPro-Medium'}}
-          color={'#e78200'}
+          color={color.secondary}
           thickness={5}
           strokeCap={'round'}
         />

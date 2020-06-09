@@ -18,8 +18,8 @@ function Detail({route, navigation: {goBack, navigate}}) {
   const {data} = route.params;
 
   const [loading, setLoading] = useState(false);
-  const [bill, setBill] = useState(
-    Object.keys(data).length > 1 ? data.Order : [],
+  const [orders, setOrders] = useState(
+    Object.keys(data).length > 1 ? data.Orders : [],
   );
 
   const handleGoBack = () => goBack();
@@ -28,12 +28,35 @@ function Detail({route, navigation: {goBack, navigate}}) {
     navigate('Menu', {handleMenuBack});
   };
 
+  //after choose a food in menu
+  const handleMenuBack = (item) => {
+    let tempData = [...orders];
+    const index = tempData.findIndex((order) => order._id === item._id);
+    if (index > -1) {
+      tempData[index].quantity += item.quantity;
+      tempData[index].totalPrice =
+        tempData[index].quantity * tempData[index].price;
+    } else {
+      tempData.push(item);
+    }
+    setOrders(tempData);
+  };
+
+  const onDeleteItem = (itemID) => {
+    let tempData = [...orders];
+    const filterBill = tempData.filter((item) => item._id !== itemID);
+    setOrders(filterBill);
+  };
+
   const onCreateBill = () => {
     setLoading(true);
     let newBill = {
-      Order: bill,
+      Orders: orders,
       Table: data.Table,
-      TotalPrice: bill.reduce((price, order) => (price += order.totalPrice), 0),
+      TotalPrice: orders.reduce(
+        (price, order) => (price += order.totalPrice),
+        0,
+      ),
     };
     socket.emit('createBill', newBill);
     socket.on('createBillResult', (result) => {
@@ -44,36 +67,32 @@ function Detail({route, navigation: {goBack, navigate}}) {
     });
   };
 
-  const handleMenuBack = (item) => {
-    let tempData = [...bill];
-    const index = tempData.findIndex((order) => order._id === item._id);
-    if (index > -1) {
-      tempData[index].quantity += item.quantity;
-      tempData[index].totalPrice =
-        tempData[index].quantity * tempData[index].price;
-    } else {
-      tempData.push(item);
-    }
-    setBill(tempData);
+  const onUpdateBill = () => {
+    setLoading(true);
+    socket.emit('updateBill', data.ID, orders);
+    socket.on('updateordersResult', (result) => {
+      setLoading(false);
+      if (result) {
+        navigate('tables');
+      }
+    });
   };
 
-  const onDeleteItem = (itemID) => {
-    let tempData = [...bill];
-    const filterBill = tempData.filter((item) => item._id !== itemID);
-    setBill(filterBill);
+  const onChangeTable = () => {
+    navigate('tables', {bill_id: data.ID});
   };
 
   return (
     <View style={styles.container}>
       <SafeAreaView style={styles.headerContainer}>
         <ActionBar index={data.Table} handleGoBack={handleGoBack} />
-        {bill.length === 0 ? <EmptyHeader /> : <Header bill={bill} />}
+        {orders.length === 0 ? <EmptyHeader /> : <Header orders={orders} />}
       </SafeAreaView>
 
       <View style={styles.bodyContainer}>
         <FlatList
           contentContainerStyle={styles.billList}
-          data={bill}
+          data={orders}
           renderItem={({item}) => (
             <ItemBill
               item={item}
@@ -84,21 +103,25 @@ function Detail({route, navigation: {goBack, navigate}}) {
           keyExtractor={(item) => item._id}
           ListEmptyComponent={() => <EmptyList onNavigate={onNavigate} />}
           ListFooterComponent={() =>
-            bill.length === 0 ? <View /> : <EmptyList onNavigate={onNavigate} />
+            orders.length === 0 ? (
+              <View />
+            ) : (
+              <EmptyList onNavigate={onNavigate} />
+            )
           }
         />
-        {bill.length === 0 ? (
+        {orders.length === 0 ? (
           <View />
         ) : data.hasOwnProperty('Created') ? (
           <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
             <TextButton
               text="Cập Nhập"
-              onPress={() => console.log('update')}
+              onPress={() => onUpdateBill()}
               style={styles.btnUpdateBill}
             />
             <TextButton
               text="Chuyển Bàn"
-              onPress={() => console.log('change table')}
+              onPress={() => onChangeTable()}
               style={styles.btnChangeTable}
             />
           </View>

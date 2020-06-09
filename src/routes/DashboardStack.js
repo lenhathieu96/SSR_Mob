@@ -7,6 +7,8 @@ import TablesScreen from '../views/TablesScreen';
 import DetailScreen from '../views/DetailScreen';
 import MenuScreen from '../views/MenuScreen';
 
+import color from '../utils/Color';
+
 const dashboardStack = createStackNavigator();
 
 function DashboardStack() {
@@ -18,7 +20,7 @@ function DashboardStack() {
         options={({navigation}) => ({
           title: 'Danh Sách Phòng Bàn',
           headerStyle: {
-            backgroundColor: '#283593',
+            backgroundColor: color.primary,
             shadowColor: 'transparent',
           },
           headerTintColor: '#fff',
@@ -30,7 +32,7 @@ function DashboardStack() {
           headerLeft: () => (
             <Icon.Button
               name="bars"
-              backgroundColor="#283593"
+              backgroundColor={color.primary}
               size={24}
               onPress={() => navigation.openDrawer()}
             />
@@ -52,7 +54,7 @@ function DashboardStack() {
         options={({navigation}) => ({
           title: 'Danh Sách Món',
           headerStyle: {
-            backgroundColor: '#283593',
+            backgroundColor: color.primary,
             shadowColor: 'transparent',
           },
           headerTitleStyle: {
@@ -64,7 +66,7 @@ function DashboardStack() {
           headerLeft: () => (
             <Icon.Button
               name="chevron-left"
-              backgroundColor="#283593"
+              backgroundColor={color.primary}
               size={24}
               onPress={() => navigation.goBack()}
             />

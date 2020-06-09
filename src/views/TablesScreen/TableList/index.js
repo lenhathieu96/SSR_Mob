@@ -14,7 +14,7 @@ TableList.propTypes = {
 const windowWidth = Dimensions.get('window').width;
 
 function TableList(props) {
-  const {data} = props;
+  const {data, onChangeTable} = props;
   return (
     <View style={styles.TableListContainer}>
       {data.length === 0 ? (

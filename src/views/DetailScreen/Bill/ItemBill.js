@@ -22,26 +22,35 @@ function ItemBill(props) {
   const {item, created, onDeleteItem} = props;
   return (
     <View style={styles.itemBillContainer}>
-      <View style={{flexDirection: 'row'}}>
-        <Text text={item.name} style={styles.itemBillDesc} />
-        <NumberText value={item.quantity} style={styles.itemBillQuantity} />
-        <NumberText value={item.totalPrice} style={styles.itemBillPrice} />
-        <IconButton
-          style={styles.btnDelete}
-          iconName="trash"
-          iconSize={fontSize.huge}
-          onPress={() => onDeleteItem(item._id)}
-        />
-      </View>
-      <Text text={item.note} style={styles.itemBillNote} />
       <Progress.Bar
-        progress={0.9}
-        color={color.secondary}
+        progress={item.served / item.quantity}
+        color={
+          item.served / item.quantity === 1 ? color.finish : color.unfinish
+        }
         width={0.9 * Dimensions.get('window').width}
-        height={fontSize.large}>
-        <Text style={{alignSelf: 'center', position: 'absolute', top: 0.5}}>
-          2/4
-        </Text>
+        height={fontSize.biggest}>
+        <View
+          style={{
+            position: 'absolute',
+            flexDirection: 'row',
+            top: 5,
+            left: 5,
+            right: 5,
+          }}>
+          <Text text={item.name} style={styles.itemBillDesc} />
+          <Text style={styles.itemBillQuantity}>
+            {item.served}/{item.quantity}
+          </Text>
+          <NumberText value={item.totalPrice} style={styles.itemBillPrice} />
+          {item.done === 0 && item.served === 0 ? (
+            <IconButton
+              style={styles.btnDelete}
+              iconName="trash"
+              iconSize={fontSize.huge}
+              onPress={() => onDeleteItem(item._id)}
+            />
+          ) : null}
+        </View>
       </Progress.Bar>
     </View>
   );

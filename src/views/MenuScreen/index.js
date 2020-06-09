@@ -19,7 +19,7 @@ import IconButton from '../../Components/IconButton';
 import BottomSheetBody from './BottomSheetBody';
 import Item from './Item';
 import serverURL from '../../Connect/ServerURL';
-
+import URL from '../../Connect/SocketIO';
 import * as fontSize from '../../utils/fontSize';
 import styles from './styles/index.css';
 

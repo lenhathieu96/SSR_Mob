@@ -31,13 +31,13 @@ const styles = StyleSheet.create({
     backgroundColor: color.secondary,
   },
   icon: {
-    color: '#283593',
+    color: color.primary,
     fontSize: 1.5 * fontSize.biggest,
   },
 
   title: {
     fontSize: fontSize.huge,
-    color: '#283593',
+    color: color.primary,
   },
   TableListContainer: {
     flex: 1,
