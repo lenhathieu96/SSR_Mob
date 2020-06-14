@@ -8,21 +8,21 @@ import Table from './Table';
 import styles from '../styles/index.css';
 
 TableList.propTypes = {
-  data: PropTypes.array.isRequired,
+  listTable: PropTypes.array.isRequired,
 };
 
 const windowWidth = Dimensions.get('window').width;
 
 function TableList(props) {
-  const {data, onChangeTable} = props;
+  const {listTable} = props;
   return (
     <View style={styles.TableListContainer}>
-      {data.length === 0 ? (
+      {listTable.length === 0 ? (
         <Loader />
       ) : (
         <FlatList
           numColumns={windowWidth > 850 ? 3 : 2}
-          data={data}
+          data={listTable}
           renderItem={({item}) => <Table data={item} />}
           keyExtractor={(item) => item.Table}
           contentContainerStyle={styles.flastlist}

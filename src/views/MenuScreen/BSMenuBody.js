@@ -11,23 +11,25 @@ import * as fontSize from '../../utils/fontSize';
 
 import styles from './styles/index.css';
 
-BottomSheetBody.propTypes = {};
+BSMenuBody.propTypes = {
+  food: PropTypes.object.isRequired,
+  onIncreaseFood: PropTypes.func.isRequired,
+  onDecreaseFood: PropTypes.func.isRequired,
+  onAddNewFood: PropTypes.func.isRequired,
+};
 
-function BottomSheetBody(props) {
+function BSMenuBody(props) {
   const {food, onIncreaseFood, onDecreaseFood, onAddNewFood} = props;
 
   const [note, setNote] = useState('');
 
   return (
-    <View style={styles.bottomSheetBody}>
+    <View style={styles.BSMenu__Body}>
       <View style={{flex: 0.9, justifyContent: 'flex-start'}}>
         <View style={{flex: 0.4, justifyContent: 'space-between'}}>
           <View style={{flexDirection: 'row'}}>
-            <Text style={styles.bottomSheetTitle}>{food.name}</Text>
-            <NumberText
-              value={food.totalPrice}
-              style={styles.bottomSheetNumber}
-            />
+            <Text style={styles.BSMenu__Title}>{food.name}</Text>
+            <NumberText value={food.totalPrice} style={styles.BSMenu__Number} />
           </View>
           <View
             style={{
@@ -70,4 +72,4 @@ function BottomSheetBody(props) {
   );
 }
 
-export default BottomSheetBody;
+export default BSMenuBody;

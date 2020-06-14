@@ -16,22 +16,23 @@ import axios from 'axios';
 import Text from '../../Components/Text';
 import IconButton from '../../Components/IconButton';
 
-import BottomSheetBody from './BottomSheetBody';
+import BottomSheetBody from './BSMenuBody';
 import Item from './Item';
-import serverURL from '../../Connect/ServerURL';
-import URL from '../../Connect/SocketIO';
+import {URL} from '../../Connect';
+
 import * as fontSize from '../../utils/fontSize';
 import styles from './styles/index.css';
 
 function Menu({route, navigation: {goBack, navigate}}) {
   const bottomsheetRef = useRef();
-  const [menu, setMenu] = useState([]);
+  const height = 0.7 * Dimensions.get('window').height;
+
+  const [filterMenu, setFilterMenu] = useState([]);
   const [sourceMenu, setSourceMenu] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [currentFood, setCurrentFood] = useState({});
 
-  const URL = serverURL + 'food';
-  const height = 0.7 * Dimensions.get('window').height;
+  const API_URL = URL + '/food';
 
   const fetchData = async () => {
     setLoading(true);
@@ -41,11 +42,11 @@ function Menu({route, navigation: {goBack, navigate}}) {
       if (menu !== null) {
         setLoading(false);
         setSourceMenu(JSON.parse(menu));
-        setMenu(JSON.parse(menu));
+        setFilterMenu(JSON.parse(menu));
       } else {
-        axios.get(URL).then(async (res) => {
+        axios.get(API_URL).then(async (res) => {
           if (res.status === 200) {
-            setMenu(res.data);
+            setFilterMenu(res.data);
             setLoading(false);
             setSourceMenu(res.data);
             try {
@@ -68,9 +69,9 @@ function Menu({route, navigation: {goBack, navigate}}) {
         const textData = text.toUpperCase();
         return itemData.indexOf(textData) > -1;
       });
-      setMenu(newData);
+      setFilterMenu(newData);
     } else {
-      setMenu(sourceMenu);
+      setFilterMenu(sourceMenu);
     }
   };
 
@@ -126,7 +127,7 @@ function Menu({route, navigation: {goBack, navigate}}) {
             </View>
           ) : (
             <FlatList
-              data={menu}
+              data={filterMenu}
               keyExtractor={(item) => item._id}
               renderItem={({item}) => (
                 <Item data={item} selectItem={selectItem} />
@@ -137,13 +138,13 @@ function Menu({route, navigation: {goBack, navigate}}) {
           )}
           <BottomSheet
             ref={bottomsheetRef}
-            snapPoints={[height, 250, 0]}
+            snapPoints={[height, 0]}
             renderHeader={() => (
-              <View style={styles.bottomSheetHeader}>
+              <View style={styles.BSMenu__Header}>
                 <IconButton
                   iconSize={fontSize.huge}
                   iconName="grip-lines"
-                  onPress={() => bottomsheetRef.current.snapTo(2)}
+                  onPress={() => bottomsheetRef.current.snapTo(1)}
                 />
               </View>
             )}
@@ -155,7 +156,7 @@ function Menu({route, navigation: {goBack, navigate}}) {
                 onAddNewFood={onAddNewFood}
               />
             )}
-            initialSnap={2}
+            initialSnap={1}
             enabledInnerScrolling={false}
           />
         </View>

@@ -1,14 +1,16 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 
 import TableList from './TableList';
-import socket from '../../Connect/SocketIO';
+import {socket} from '../../Connect';
 import color from '../../utils/Color';
+import {TablesContext} from '../../Contexts/TablesContext';
 const Tab = createMaterialTopTabNavigator();
 
-function Dashboard({route}) {
-  const bill_id = route.params;
-  const [listTable, setListTable] = useState([]);
+function TablesScreen() {
+  const context = useContext(TablesContext);
+
+  const listTable = context.tables;
 
   useEffect(() => {
     const tables = new Array(30)
@@ -17,25 +19,20 @@ function Dashboard({route}) {
 
     socket.emit('allBill');
     socket.on('allBillResult', (bills) => {
-      console.log('data changed');
       let tempTables = [...tables];
+      //have bills not payed yet
       if (bills.length > 0) {
         for (let item of bills) {
           let index = item.Table - 1;
           tempTables[index] = {...tempTables[index], ...item};
         }
       }
-      setListTable(tempTables);
+      context.updateTables(tempTables);
     });
   }, []);
 
-  const onChangeTable = (index_table) => {
-    console.log(index_table);
-  };
-
   return (
     <Tab.Navigator
-      initialRouteName={!bill_id ? 'allTables' : 'emptyTables'}
       tabBarOptions={{
         tabStyle: {
           opacity: 0.9,
@@ -50,29 +47,26 @@ function Dashboard({route}) {
         pressOpacity: 0.9,
       }}>
       {/* all tables */}
-      {!bill_id ? (
-        <Tab.Screen
-          name="allTables"
-          options={{
-            title: 'Tất Cả',
-          }}>
-          {() => <TableList data={listTable} />}
-        </Tab.Screen>
-      ) : null}
 
-      {!bill_id ? (
-        <Tab.Screen
-          name="servingTables"
-          options={{
-            title: 'Sử Dụng',
-          }}>
-          {() => (
-            <TableList
-              data={listTable.filter((item) => Object.keys(item).length > 1)}
-            />
-          )}
-        </Tab.Screen>
-      ) : null}
+      <Tab.Screen
+        name="allTables"
+        options={{
+          title: 'Tất Cả',
+        }}>
+        {() => <TableList listTable={listTable} />}
+      </Tab.Screen>
+
+      <Tab.Screen
+        name="servingTables"
+        options={{
+          title: 'Sử Dụng',
+        }}>
+        {() => (
+          <TableList
+            listTable={listTable.filter((item) => Object.keys(item).length > 1)}
+          />
+        )}
+      </Tab.Screen>
 
       <Tab.Screen
         name="emptyTables"
@@ -81,8 +75,9 @@ function Dashboard({route}) {
         }}>
         {() => (
           <TableList
-            data={listTable.filter((item) => Object.keys(item).length === 1)}
-            onChangeTable={onChangeTable}
+            listTable={listTable.filter(
+              (item) => Object.keys(item).length === 1,
+            )}
           />
         )}
       </Tab.Screen>
@@ -90,4 +85,4 @@ function Dashboard({route}) {
   );
 }
 
-export default Dashboard;
+export default TablesScreen;

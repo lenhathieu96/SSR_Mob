@@ -47,25 +47,25 @@ const styles = StyleSheet.create({
   },
   //=============================================================================================
   //bottom sheet styles
-  bottomSheetHeader: {
+  BSMenu__Header: {
     padding: 10,
     backgroundColor: color.bg,
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
     alignItems: 'center',
   },
-  bottomSheetBody: {
+  BSMenu__Body: {
     backgroundColor: color.bg,
     flexGrow: 1,
     padding: 10,
     height,
   },
-  bottomSheetTitle: {
+  BSMenu__Title: {
     fontSize: fontSize.larger,
     flex: 0.5,
     textAlign: 'center',
   },
-  bottomSheetNumber: {
+  BSMenu__Number: {
     fontSize: fontSize.larger,
     fontWeight: 'bold',
     color: color.secondary,
