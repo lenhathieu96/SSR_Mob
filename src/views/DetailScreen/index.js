@@ -1,9 +1,11 @@
-import React, {useState, useRef, useContext} from 'react';
+import React, {useState, useRef, useContext, useEffect} from 'react';
 import {View, SafeAreaView, FlatList, Dimensions} from 'react-native';
 import BottomSheet from 'reanimated-bottom-sheet';
 
 import {TablesContext} from '../../Contexts/TablesContext';
+import {CurrentTableContext} from '../../Contexts/CurrentTableContext';
 
+import {BoldText} from '../../Components/Text';
 import TextButton from '../../Components/TextButton';
 import IconButton from '../../Components/IconButton';
 
@@ -16,42 +18,65 @@ import {socket} from '../../Connect';
 
 import EmptyHeader from './Header/EmptyHeader';
 import Loader from '../../Components/Loader';
-import BottomShetBody from './BSDetailBody';
+import Body from './BottomSheet/BSEmptyTables/Body';
+import BottomSheetBody from '../MenuScreen/BSMenuBody';
 
 import * as fontSize from '../../utils/fontSize';
 import styles from './styles/index.css';
-import {BoldText} from '../../Components/Text';
 
 function Detail({route, navigation: {goBack, navigate}}) {
-  const context = useContext(TablesContext);
-  const {data} = route.params;
+  const {tableDetail} = route.params;
+
+  const tablesContext = useContext(TablesContext);
+  const currentTable = useContext(CurrentTableContext);
 
   const bottomSheetRef = useRef();
+  const BSmenuRef = useRef();
+
   const height = Dimensions.get('window').height;
+  const BSFoodHeight = 0.7 * Dimensions.get('window').height;
 
   const [loading, setLoading] = useState(false);
   const [orders, setOrders] = useState(
-    Object.keys(data).length > 1 ? data.Orders : [],
+    Object.keys(tableDetail).length > 1 ? tableDetail.Orders : [],
   );
+  const [currentFood, setCurrentFood] = useState({});
 
-  const handleGoBack = () => goBack();
+  useEffect(() => {
+    // check have currentTable
+
+    if (
+      Object.keys(currentTable).length > 0 && Object.keys(currentTable).length === 1
+    ) {
+      if (tableDetail.Table === currentTable.data.Table) {
+        setOrders(currentTable.data.Orders);
+      }
+    }
+  }, []);
+
+  const handleGoBack = () => {
+    let newBill = {
+      Orders: orders,
+      Table: tableDetail.Table,
+    };
+    currentTable.setData(newBill);
+    goBack();
+  };
 
   const onNavigate = () => {
     navigate('Menu', {handleMenuBack});
   };
 
   //after choose a food in menu
-  const handleMenuBack = (item) => {
-    let tempData = [...orders];
-    const index = tempData.findIndex((order) => order._id === item._id);
-    if (index > -1) {
-      tempData[index].quantity += item.quantity;
-      tempData[index].totalPrice =
-        tempData[index].quantity * tempData[index].price;
-    } else {
-      tempData.push(item);
-    }
-    setOrders(tempData);
+  const handleMenuBack = async (ordersData) => {
+    let tempOrders = [...orders];
+    ordersData.forEach((item) => {
+      const index = tempOrders.findIndex((order) => order._id === item._id);
+      index > -1
+        ? (tempOrders[index].quantity += item.quantity)
+        : tempOrders.push(item);
+    });
+    setOrders(tempOrders);
   };
 
   const onDeleteItem = (itemID) => {
@@ -64,7 +89,7 @@ function Detail({route, navigation: {goBack, navigate}}) {
     setLoading(true);
     let newBill = {
       Orders: orders,
-      Table: data.Table,
+      Table: tableDetail.Table,
       TotalPrice: orders.reduce(
         (price, order) => (price += order.totalPrice),
         0,
@@ -75,13 +100,14 @@ function Detail({route, navigation: {goBack, navigate}}) {
       setLoading(false);
       if (result) {
         navigate('tables');
+        currentTable.setData({});
       }
     });
   };
 
   const onUpdateBill = () => {
     setLoading(true);
-    socket.emit('updateBill', data.ID, orders);
+    socket.emit('updateBill', tableDetail.ID, orders);
     socket.on('updateBillResult', (result) => {
       setLoading(false);
       if (result) {
@@ -96,7 +122,7 @@ function Detail({route, navigation: {goBack, navigate}}) {
 
   const chooseSwitchTable = (tableNumber) => {
     setLoading(true);
-    socket.emit('switchTable', data.ID, tableNumber);
+    socket.emit('switchTable', tableDetail.ID, tableNumber);
     socket.on('switchTableResult', (result) => {
       setLoading(false);
       if (result) {
@@ -106,10 +132,43 @@ function Detail({route, navigation: {goBack, navigate}}) {
     });
   };
 
+  const selectFood = (foodID) => {
+    const food = orders.find((order) => order._id === foodID);
+    setCurrentFood(food);
+    BSmenuRef.current.snapTo(0);
+  };
+
+  const onIncreaseFood = () => {
+    const food = {...currentFood};
+    food.quantity++;
+    food.totalPrice = food.price * food.quantity;
+    setCurrentFood(food);
+  };
+
+  const onDecreaseFood = () => {
+    const food = {...currentFood};
+    food.quantity--;
+    food.totalPrice = food.price * food.quantity;
+    setCurrentFood(food);
+  };
+
+  const updateFood = (note) => {
+    const food = {...currentFood};
+    food.note = note;
+    BSmenuRef.current.snapTo(1);
+
+    const tempOrders = [...orders];
+    const index = tempOrders.findIndex((item) => item._id === food._id);
+    if (index > -1) {
+      tempOrders[index] = {...food};
+    }
+    setOrders(tempOrders);
+  };
+
   return (
     <View style={styles.container}>
       <SafeAreaView style={styles.headerContainer}>
-        <ActionBar index={data.Table} handleGoBack={handleGoBack} />
+        <ActionBar index={tableDetail.Table} handleGoBack={handleGoBack} />
         {orders.length === 0 ? <EmptyHeader /> : <Header orders={orders} />}
       </SafeAreaView>
 
@@ -121,7 +180,8 @@ function Detail({route, navigation: {goBack, navigate}}) {
             <ItemBill
               item={item}
               onDeleteItem={onDeleteItem}
-              created={data.hasOwnProperty('Created') ? true : false}
+              created={tableDetail.hasOwnProperty('Created') ? true : false}
+              selectFood={selectFood}
             />
           )}
           keyExtractor={(item) => item._id}
@@ -136,10 +196,10 @@ function Detail({route, navigation: {goBack, navigate}}) {
         />
         {orders.length === 0 ? (
           <View />
-        ) : data.hasOwnProperty('Created') ? (
+        ) : tableDetail.hasOwnProperty('Created') ? (
           <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
             <TextButton
-              text="Cập Nhập"
+              text="Cập Nhật"
               onPress={() => onUpdateBill()}
               style={styles.btnUpdateBill}
             />
@@ -175,12 +235,38 @@ function Detail({route, navigation: {goBack, navigate}}) {
           </SafeAreaView>
         )}
         renderContent={() => (
-          <BottomShetBody
-            tables={context.tables}
+          <Body
+            tables={tablesContext.tables}
             chooseSwitchTable={chooseSwitchTable}
           />
         )}
       />
+
+      <BottomSheet
+        ref={BSmenuRef}
+        snapPoints={[BSFoodHeight, 0]}
+        renderHeader={() => (
+          <View style={styles.BSMenu__Header}>
+            <IconButton
+              iconSize={fontSize.huge}
+              iconName="grip-lines"
+              onPress={() => BSmenuRef.current.snapTo(1)}
+            />
+          </View>
+        )}
+        renderContent={() => (
+          <BottomSheetBody
+            food={currentFood}
+            onIncreaseFood={onIncreaseFood}
+            onDecreaseFood={onDecreaseFood}
+            onAddNewFood={updateFood}
+            isUpdate={true}
+          />
+        )}
+        initialSnap={1}
+        enabledInnerScrolling={false}
+      />
+
       {loading ? <Loader /> : null}
     </View>
   );

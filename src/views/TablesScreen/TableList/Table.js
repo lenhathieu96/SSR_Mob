@@ -8,19 +8,19 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import styles from '../styles/index.css';
 
 function Table(props) {
-  const {data, onChangeTable} = props;
+  const {tableDetail} = props;
   const navigation = useNavigation();
 
   return (
     <TouchableOpacity
       style={
-        Object.keys(data).length > 1
+        Object.keys(tableDetail).length > 1
           ? styles.itemTableContainer__used
           : styles.itemTableContainer
       }
-      onPress={() => navigation.navigate('Detail', {data})}>
+      onPress={() => navigation.navigate('Detail', {tableDetail})}>
       <Icon name="utensils" style={styles.icon} />
-      <BoldText style={styles.title}>Bàn {data.Table}</BoldText>
+      <BoldText style={styles.title}>Bàn {tableDetail.Table}</BoldText>
     </TouchableOpacity>
   );
 }

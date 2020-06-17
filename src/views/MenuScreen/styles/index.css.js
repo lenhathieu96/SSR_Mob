@@ -48,7 +48,6 @@ const styles = StyleSheet.create({
   //=============================================================================================
   //bottom sheet styles
   BSMenu__Header: {
-    padding: 10,
     backgroundColor: color.bg,
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
@@ -72,6 +71,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     flex: 0.5,
   },
+  btnConfirm: {
+    backgroundColor: color.primary,
+    margin: 10,
+  },
 
   btnQuantity: {
     alignItems: 'center',
@@ -81,5 +84,6 @@ const styles = StyleSheet.create({
     backgroundColor: color.add,
     marginBottom: 10,
   },
+ 
 });
 export default styles;

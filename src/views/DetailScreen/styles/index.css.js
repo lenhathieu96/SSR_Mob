@@ -187,5 +187,11 @@ const styles = StyleSheet.create({
   BSDetail__itemTitle: {
     fontSize: fontSize.larger,
   },
+  BSMenu__Header: {
+    backgroundColor: color.bg,
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
+    alignItems: 'center',
+  },
 });
 export default styles;

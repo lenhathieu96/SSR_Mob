@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useEffect, useContext} from 'react';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 
 import TableList from './TableList';

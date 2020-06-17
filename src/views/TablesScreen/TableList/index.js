@@ -23,7 +23,7 @@ function TableList(props) {
         <FlatList
           numColumns={windowWidth > 850 ? 3 : 2}
           data={listTable}
-          renderItem={({item}) => <Table data={item} />}
+          renderItem={({item}) => <Table tableDetail={item} />}
           keyExtractor={(item) => item.Table}
           contentContainerStyle={styles.flastlist}
         />

@@ -2,15 +2,15 @@ import React from 'react';
 import {TouchableOpacity, FlatList, View} from 'react-native';
 import PropTypes from 'prop-types';
 
-import styles from './styles/index.css';
-import Text from '../../Components/Text';
+import styles from '../../styles/index.css';
+import Text from '../../../../Components/Text';
 
-BSDetailBody.propTypes = {
+Body.propTypes = {
   tables: PropTypes.array.isRequired,
   chooseSwitchTable: PropTypes.func.isRequired,
 };
 
-function BSDetailBody(props) {
+function Body(props) {
   const {tables, chooseSwitchTable} = props;
 
   const emptyTables = tables.filter((table) => Object.keys(table).length === 1);
@@ -32,4 +32,4 @@ function BSDetailBody(props) {
   );
 }
 
-export default BSDetailBody;
+export default Body;

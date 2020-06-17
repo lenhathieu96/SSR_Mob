@@ -8,15 +8,15 @@ import styles from './styles/index.css';
 
 Item.propTypes = {
   data: PropTypes.object.isRequired,
-  selectItem: PropTypes.func.isRequired,
+  selectFood: PropTypes.func.isRequired,
 };
 
 function Item(props) {
-  const {data, selectItem} = props;
+  const {data, selectFood} = props;
   return (
     <TouchableOpacity
       style={styles.menuItemContainer}
-      onPress={() => selectItem(data._id)}>
+      onPress={() => selectFood(data._id)}>
       <Text text={data.name} style={styles.itemName} />
       <NumberText value={data.price} style={styles.itemPrice} />
     </TouchableOpacity>

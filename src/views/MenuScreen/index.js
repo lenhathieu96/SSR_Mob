@@ -8,12 +8,13 @@ import {
   Dimensions,
   KeyboardAvoidingView,
 } from 'react-native';
-
 import BottomSheet from 'reanimated-bottom-sheet';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
+import Toast, {DURATION} from 'react-native-easy-toast'
 
 import Text from '../../Components/Text';
+import TextButton from '../../Components/TextButton';
 import IconButton from '../../Components/IconButton';
 
 import BottomSheetBody from './BSMenuBody';
@@ -25,41 +26,32 @@ import styles from './styles/index.css';
 
 function Menu({route, navigation: {goBack, navigate}}) {
   const bottomsheetRef = useRef();
+  const toastRef = useRef();
+
   const height = 0.7 * Dimensions.get('window').height;
 
   const [filterMenu, setFilterMenu] = useState([]);
   const [sourceMenu, setSourceMenu] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [currentFood, setCurrentFood] = useState({});
+  const [orders, setOrders] = useState([]);
 
   const API_URL = URL + '/food';
 
   const fetchData = async () => {
     setLoading(true);
-    try {
-      const menu = await AsyncStorage.getItem('menu');
-
-      if (menu !== null) {
+    axios.get(API_URL).then(async (res) => {
+      if (res.status === 200) {
+        setFilterMenu(res.data);
         setLoading(false);
-        setSourceMenu(JSON.parse(menu));
-        setFilterMenu(JSON.parse(menu));
-      } else {
-        axios.get(API_URL).then(async (res) => {
-          if (res.status === 200) {
-            setFilterMenu(res.data);
-            setLoading(false);
-            setSourceMenu(res.data);
-            try {
-              await AsyncStorage.setItem('menu', JSON.stringify(res.data));
-            } catch (e) {
-              console.log(e);
-            }
-          }
-        });
+        setSourceMenu(res.data);
+        try {
+          await AsyncStorage.setItem('menu', JSON.stringify(res.data));
+        } catch (e) {
+          console.log(e);
+        }
       }
-    } catch (e) {
-      console.log(e);
-    }
+    });
   };
 
   const search = (text) => {
@@ -75,8 +67,8 @@ function Menu({route, navigation: {goBack, navigate}}) {
     }
   };
 
-  const selectItem = (itemID) => {
-    const food = sourceMenu.find((item) => itemID === item._id);
+  const selectFood = (foodID) => {
+    const food = sourceMenu.find((food) => foodID === food._id);
     food.done = 0;
     food.quantity = 1;
     food.served = 0;
@@ -103,17 +95,48 @@ function Menu({route, navigation: {goBack, navigate}}) {
   const onAddNewFood = (note) => {
     const food = {...currentFood};
     food.note = note;
+    bottomsheetRef.current.snapTo(1);
+
+    let tempData = [...orders];
+    const index = tempData.findIndex((order) => order._id === food._id);
+    if (index > -1) {
+      tempData[index].quantity += food.quantity;
+      tempData[index].totalPrice =
+        tempData[index].quantity * tempData[index].price;
+    } else {
+      tempData.push(food);
+    }
+    setOrders(tempData);
+    toastRef.current.show('hello world!');
+  };
+
+  const ConfirmOrder = () => {
     goBack();
-    route.params.handleMenuBack(food);
+    route.params.handleMenuBack(orders);
   };
 
   useEffect(() => {
-    fetchData();
+    const getData = async () => {
+      try {
+        const menu = await AsyncStorage.getItem('menu');
+        if (menu !== null) {
+          setLoading(false);
+          setSourceMenu(JSON.parse(menu));
+          setFilterMenu(JSON.parse(menu));
+        } else {
+          fetchData();
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    getData();
   }, []);
 
   return (
     <KeyboardAvoidingView style={{flex: 1}}>
       <SafeAreaView style={styles.menuContainer}>
+        <Toast ref={toastRef} />
         <TextInput
           placeholder="Nhập Món Cần Tìm"
           onChangeText={(text) => search(text)}
@@ -130,37 +153,44 @@ function Menu({route, navigation: {goBack, navigate}}) {
               data={filterMenu}
               keyExtractor={(item) => item._id}
               renderItem={({item}) => (
-                <Item data={item} selectItem={selectItem} />
+                <Item data={item} selectFood={selectFood} />
               )}
               refreshing={isLoading}
               onRefresh={() => fetchData()}
             />
           )}
-          <BottomSheet
-            ref={bottomsheetRef}
-            snapPoints={[height, 0]}
-            renderHeader={() => (
-              <View style={styles.BSMenu__Header}>
-                <IconButton
-                  iconSize={fontSize.huge}
-                  iconName="grip-lines"
-                  onPress={() => bottomsheetRef.current.snapTo(1)}
-                />
-              </View>
-            )}
-            renderContent={() => (
-              <BottomSheetBody
-                food={currentFood}
-                onIncreaseFood={onIncreaseFood}
-                onDecreaseFood={onDecreaseFood}
-                onAddNewFood={onAddNewFood}
-              />
-            )}
-            initialSnap={1}
-            enabledInnerScrolling={false}
-          />
         </View>
+        <TextButton
+          text="Hoàn Tất Đặt Món"
+          style={styles.btnConfirm}
+          onPress={() => ConfirmOrder()}
+        />
       </SafeAreaView>
+
+      <BottomSheet
+        ref={bottomsheetRef}
+        snapPoints={[height, 0]}
+        renderHeader={() => (
+          <View style={styles.BSMenu__Header}>
+            <IconButton
+              iconSize={fontSize.huge}
+              iconName="grip-lines"
+              onPress={() => bottomsheetRef.current.snapTo(1)}
+            />
+          </View>
+        )}
+        renderContent={() => (
+          <BottomSheetBody
+            food={currentFood}
+            onIncreaseFood={onIncreaseFood}
+            onDecreaseFood={onDecreaseFood}
+            onAddNewFood={onAddNewFood}
+            isUpdate={false}
+          />
+        )}
+        initialSnap={1}
+        enabledInnerScrolling={false}
+      />
     </KeyboardAvoidingView>
   );
 }

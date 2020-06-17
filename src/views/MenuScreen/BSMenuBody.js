@@ -19,7 +19,7 @@ BSMenuBody.propTypes = {
 };
 
 function BSMenuBody(props) {
-  const {food, onIncreaseFood, onDecreaseFood, onAddNewFood} = props;
+  const {food, onIncreaseFood, onDecreaseFood, onAddNewFood, isUpdate} = props;
 
   const [note, setNote] = useState('');
 
@@ -64,9 +64,9 @@ function BSMenuBody(props) {
         </View>
       </View>
       <TextButton
-        text="Thêm Món"
+        text={isUpdate ? 'Cập Nhập' : 'Thêm Món'}
         onPress={() => onAddNewFood(note)}
-        style={styles.btnAdd}
+        style={isUpdate ? styles.btnConfirm : styles.btnAdd}
       />
     </View>
   );
