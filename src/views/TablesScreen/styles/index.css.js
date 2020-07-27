@@ -1,7 +1,7 @@
 import {Dimensions, StyleSheet} from 'react-native';
 
-import color from '../../../utils/Color';
-import * as fontSize from '../../../utils/fontSize';
+import color from '../../../Utils/Color';
+import * as fontSize from '../../../Utils/fontSize';
 
 const windowWidth = Dimensions.get('window').width;
 const containerSize = windowWidth > 850 ? 0.3 * windowWidth : 0.4 * windowWidth;

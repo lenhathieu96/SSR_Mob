@@ -7,7 +7,7 @@ import Text from '../../Components/Text';
 import NumberText from '../../Components/NumberText';
 import TextButton from '../../Components/TextButton';
 
-import * as fontSize from '../../utils/fontSize';
+import * as fontSize from '../../Utils/fontSize';
 
 import styles from './styles/index.css';
 

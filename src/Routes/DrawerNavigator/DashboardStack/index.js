@@ -3,13 +3,13 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import TablesScreen from '../views/TablesScreen';
-import DetailScreen from '../views/DetailScreen';
-import MenuScreen from '../views/MenuScreen';
+import TablesScreen from '../../../Views/TablesScreen';
+import DetailScreen from '../../../Views/DetailScreen';
+import MenuScreen from '../../../Views/MenuScreen';
 
-import color from '../utils/Color';
-import {TablesProvider} from '../Contexts/TablesContext';
-import {CurrentTableProvider} from '../Contexts/CurrentTableContext';
+import color from '../../../Utils/Color';
+import {TablesProvider} from '../../../Contexts/TablesContext';
+import {CurrentTableProvider} from '../../../Contexts/CurrentTableContext';
 
 const dashboardStack = createStackNavigator();
 

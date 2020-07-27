@@ -17,17 +17,13 @@ function TableList(props) {
   const {listTable} = props;
   return (
     <View style={styles.TableListContainer}>
-      {listTable.length === 0 ? (
-        <Loader />
-      ) : (
-        <FlatList
-          numColumns={windowWidth > 850 ? 3 : 2}
-          data={listTable}
-          renderItem={({item}) => <Table tableDetail={item} />}
-          keyExtractor={(item) => item.Table}
-          contentContainerStyle={styles.flastlist}
-        />
-      )}
+      <FlatList
+        numColumns={windowWidth > 850 ? 3 : 2}
+        data={listTable}
+        renderItem={({item}) => <Table tableDetail={item} />}
+        keyExtractor={(item) => item.Table}
+        contentContainerStyle={styles.flastlist}
+      />
     </View>
   );
 }

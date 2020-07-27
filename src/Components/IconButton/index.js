@@ -2,9 +2,7 @@ import React from 'react';
 import {TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import PropTypes from 'prop-types';
-
-import * as fontSize from '../../utils/fontSize';
-import color from '../../utils/Color';
+import color from '../../Utils/Color';
 
 import styles from './styles/index.css';
 
@@ -12,7 +10,7 @@ IconButton.propTypes = {
   iconName: PropTypes.string.isRequired,
   onPress: PropTypes.func.isRequired,
   style: PropTypes.object,
-
+  iconColor: PropTypes.string,
   disabled: PropTypes.bool,
 };
 

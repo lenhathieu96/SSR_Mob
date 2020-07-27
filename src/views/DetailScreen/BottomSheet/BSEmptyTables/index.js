@@ -10,8 +10,9 @@ import IconButton from '../../../../Components/IconButton';
 
 import Body from './Body';
 
-import * as fontSize from '../../../../utils/fontSize';
+import * as fontSize from '../../../utils/fontSize';
 import styles from '../../styles/index.css';
+
 BSEmptyTables.propTypes = {};
 
 function BSEmptyTables(props) {
@@ -20,10 +21,6 @@ function BSEmptyTables(props) {
   const height = Dimensions.get('window').height;
 
   const tablesContext = useContext(TablesContext);
-
-  const openBS = () => {
-    bottomSheetRef.current.snapTo(0);
-  };
 
   return (
     <BottomSheet

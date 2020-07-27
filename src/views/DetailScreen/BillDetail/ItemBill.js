@@ -7,10 +7,10 @@ import IconButton from '../../../Components/IconButton';
 
 import * as Progress from 'react-native-progress';
 
-import * as fontSize from '../../../utils/fontSize';
+import * as fontSize from '../../../Utils/fontSize';
 
 import styles from '../styles/index.css';
-import color from '../../../utils/Color';
+import color from '../../../Utils/Color';
 
 ItemBill.propTypes = {
   item: PropTypes.object.isRequired,
@@ -35,7 +35,7 @@ function ItemBill(props) {
             item.served / item.quantity === 1 ? color.finish : color.unfinish
           }
           width={0.9 * Dimensions.get('window').width}
-          height={2 * fontSize.biggest}>
+          height={2.5 * fontSize.biggest}>
           <View
             style={{
               position: 'absolute',

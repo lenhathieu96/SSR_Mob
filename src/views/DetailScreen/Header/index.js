@@ -1,14 +1,14 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import PropTypes from 'prop-types';
-import {View, FlatList} from 'react-native';
+import {View} from 'react-native';
 import * as Progress from 'react-native-progress';
 
 import Text, {BoldText} from '../../../Components/Text';
 import NumberText from '../../../Components/NumberText';
 
-import color from '../../../utils/Color';
-import * as fontSize from '../../../utils/fontSize';
+import color from '../../../Utils/Color';
+import * as fontSize from '../../../Utils/fontSize';
 import styles from '../styles/index.css';
 
 Header.propTypes = {
@@ -56,39 +56,6 @@ function Header(props) {
           strokeCap={'round'}
         />
       </View>
-      {/* <View>
-        <BoldText style={styles.desc}>Tiến Độ </BoldText>
-        <FlatList
-          data={bill}
-          renderItem={({item}) => (
-            <View
-              style={{
-                padding: 5,
-                marginRight: 10,
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Progress.Circle
-                size={2 * fontSize.biggest}
-                progress={0.75}
-                showsText={true}
-                formatText={() => "2/3"}
-                textStyle={{color: 'white', fontFamily: 'MavenPro-Medium'}}
-                color={'#e78200'}
-                thickness={3}
-                strokeCap={'round'}
-              />
-              <Text style={{color: 'white', fontSize: fontSize.large}}>
-                {item.name}
-              </Text>
-            </View>
-          )}
-          keyExtractor={(item, index) => item._id}
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-        />
-      </View> */}
     </View>
   );
 }

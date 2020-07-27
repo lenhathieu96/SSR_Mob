@@ -3,13 +3,14 @@ import {View} from 'react-native';
 import Modal from 'react-native-modal';
 import * as Progress from 'react-native-progress';
 
-import * as fontSize from '../../utils/fontSize';
+import * as fontSize from '../../Utils/fontSize';
 
 import Text from '../Text';
 
+import color from '../../Utils/Color';
 import styles from './styles/index.css';
 
-function Loader(props) {
+function Loader() {
   return (
     <View>
       <Modal isVisible={true}>
@@ -17,7 +18,7 @@ function Loader(props) {
           <Progress.CircleSnail
             indeterminate={true}
             size={2 * fontSize.biggest}
-            color={'#e78200'}
+            color={color.secondary}
             thickness={5}
             allowFontScaling={true}
           />

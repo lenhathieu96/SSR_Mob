@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {BoldText} from '../../../Components/Text';
-import * as fontSize from '../../../utils/fontSize';
+import * as fontSize from '../../../Utils/fontSize';
 import styles from '../styles/index.css';
 
 EmptyList.propTypes = {

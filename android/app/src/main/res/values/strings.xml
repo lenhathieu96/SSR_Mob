@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">SSRMOB</string>
+    <color name="white">#FFFFFF</color>
 </resources>

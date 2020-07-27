@@ -21,7 +21,7 @@ import Loader from '../../Components/Loader';
 import Body from './BottomSheet/BSEmptyTables/Body';
 import BottomSheetBody from '../MenuScreen/BSMenuBody';
 
-import * as fontSize from '../../utils/fontSize';
+import * as fontSize from '../../Utils/fontSize';
 import styles from './styles/index.css';
 
 function Detail({route, navigation: {goBack, navigate}}) {
@@ -46,7 +46,8 @@ function Detail({route, navigation: {goBack, navigate}}) {
     // check have currentTable
 
     if (
-      Object.keys(currentTable).length > 0 && Object.keys(currentTable).length === 1
+      Object.keys(currentTable).length > 0 &&
+      Object.keys(tableDetail).length === 1
     ) {
       if (tableDetail.Table === currentTable.data.Table) {
         setOrders(currentTable.data.Orders);
@@ -68,7 +69,7 @@ function Detail({route, navigation: {goBack, navigate}}) {
   };
 
   //after choose a food in menu
-  const handleMenuBack = async (ordersData) => {
+  const handleMenuBack = (ordersData) => {
     let tempOrders = [...orders];
     ordersData.forEach((item) => {
       const index = tempOrders.findIndex((order) => order._id === item._id);

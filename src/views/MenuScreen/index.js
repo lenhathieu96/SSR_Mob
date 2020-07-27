@@ -7,11 +7,12 @@ import {
   ActivityIndicator,
   Dimensions,
   KeyboardAvoidingView,
+  ToastAndroid,
 } from 'react-native';
 import BottomSheet from 'reanimated-bottom-sheet';
 import AsyncStorage from '@react-native-community/async-storage';
-import axios from 'axios';
-import Toast, {DURATION} from 'react-native-easy-toast'
+
+import foodApi from '../../Api/FoodApi';
 
 import Text from '../../Components/Text';
 import TextButton from '../../Components/TextButton';
@@ -21,12 +22,11 @@ import BottomSheetBody from './BSMenuBody';
 import Item from './Item';
 import {URL} from '../../Connect';
 
-import * as fontSize from '../../utils/fontSize';
+import * as fontSize from '../../Utils/fontSize';
 import styles from './styles/index.css';
 
 function Menu({route, navigation: {goBack, navigate}}) {
   const bottomsheetRef = useRef();
-  const toastRef = useRef();
 
   const height = 0.7 * Dimensions.get('window').height;
 
@@ -36,22 +36,18 @@ function Menu({route, navigation: {goBack, navigate}}) {
   const [currentFood, setCurrentFood] = useState({});
   const [orders, setOrders] = useState([]);
 
-  const API_URL = URL + '/food';
-
   const fetchData = async () => {
     setLoading(true);
-    axios.get(API_URL).then(async (res) => {
-      if (res.status === 200) {
-        setFilterMenu(res.data);
-        setLoading(false);
-        setSourceMenu(res.data);
-        try {
-          await AsyncStorage.setItem('menu', JSON.stringify(res.data));
-        } catch (e) {
-          console.log(e);
-        }
-      }
-    });
+    const allFood = await foodApi.getAllFood();
+    console.log(allFood);
+    setFilterMenu(allFood);
+    setLoading(false);
+    setSourceMenu(allFood);
+    try {
+      await AsyncStorage.setItem('menu', JSON.stringify(allFood));
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const search = (text) => {
@@ -107,7 +103,7 @@ function Menu({route, navigation: {goBack, navigate}}) {
       tempData.push(food);
     }
     setOrders(tempData);
-    toastRef.current.show('hello world!');
+    ToastAndroid.show('Thêm Thành Công', ToastAndroid.SHORT);
   };
 
   const ConfirmOrder = () => {
@@ -117,6 +113,7 @@ function Menu({route, navigation: {goBack, navigate}}) {
 
   useEffect(() => {
     const getData = async () => {
+      setLoading(true);
       try {
         const menu = await AsyncStorage.getItem('menu');
         if (menu !== null) {
@@ -136,7 +133,6 @@ function Menu({route, navigation: {goBack, navigate}}) {
   return (
     <KeyboardAvoidingView style={{flex: 1}}>
       <SafeAreaView style={styles.menuContainer}>
-        <Toast ref={toastRef} />
         <TextInput
           placeholder="Nhập Món Cần Tìm"
           onChangeText={(text) => search(text)}
@@ -160,11 +156,13 @@ function Menu({route, navigation: {goBack, navigate}}) {
             />
           )}
         </View>
-        <TextButton
-          text="Hoàn Tất Đặt Món"
-          style={styles.btnConfirm}
-          onPress={() => ConfirmOrder()}
-        />
+        {orders.length > 0 ? (
+          <TextButton
+            text="Hoàn Tất Đặt Món"
+            style={styles.btnConfirm}
+            onPress={() => ConfirmOrder()}
+          />
+        ) : null}
       </SafeAreaView>
 
       <BottomSheet

@@ -1,6 +1,5 @@
 import {StyleSheet} from 'react-native';
-import * as fontSize from '../../../utils/fontSize';
-import color from '../../../utils/Color';
+import * as fontSize from '../../../Utils/fontSize';
 
 const styles = StyleSheet.create({
   TextButton: {
@@ -11,7 +10,6 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: fontSize.larger,
-    color: 'white',
   },
 });
 export default styles;

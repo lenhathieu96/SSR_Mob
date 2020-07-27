@@ -3,14 +3,14 @@ import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs
 
 import TableList from './TableList';
 import {socket} from '../../Connect';
-import color from '../../utils/Color';
+import color from '../../Utils/Color';
 import {TablesContext} from '../../Contexts/TablesContext';
 const Tab = createMaterialTopTabNavigator();
 
 function TablesScreen() {
   const context = useContext(TablesContext);
-
   const listTable = context.tables;
+  //use TablesContext to render each tab screen with their conditions
 
   useEffect(() => {
     const tables = new Array(30)
@@ -19,6 +19,7 @@ function TablesScreen() {
 
     socket.emit('allBill');
     socket.on('allBillResult', (bills) => {
+      //
       let tempTables = [...tables];
       //have bills not payed yet
       if (bills.length > 0) {
