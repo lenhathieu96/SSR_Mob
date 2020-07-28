@@ -1,6 +1,6 @@
 import React, {useEffect, useContext} from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
-import {createStackNavigator} from '@react-navigation/stack';
+import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 
 import DrawerNavigator from './DrawerNavigator';
 import LoginScreen from '../Views/LoginScreen';
@@ -30,13 +30,13 @@ export default function AuthStack() {
         <authStack.Screen
           name="LoginScreen"
           component={LoginScreen}
-          options={{headerShown: false}}
+          options={{headerShown: false, ...TransitionPresets.SlideFromRightIOS}}
         />
       ) : (
         <authStack.Screen
           name="DrawerNavigator"
           component={DrawerNavigator}
-          options={{headerShown: false}}
+          options={{headerShown: false, ...TransitionPresets.SlideFromRightIOS}}
         />
       )}
     </authStack.Navigator>

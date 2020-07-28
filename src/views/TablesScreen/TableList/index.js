@@ -23,6 +23,7 @@ function TableList(props) {
         renderItem={({item}) => <Table tableDetail={item} />}
         keyExtractor={(item) => item.Table}
         contentContainerStyle={styles.flastlist}
+        showsVerticalScrollIndicator={false}
       />
     </View>
   );

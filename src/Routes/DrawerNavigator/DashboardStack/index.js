@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import {createStackNavigator} from '@react-navigation/stack';
+import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 
 import TablesScreen from '../../../Views/TablesScreen';
 import DetailScreen from '../../../Views/DetailScreen';
@@ -22,6 +22,7 @@ function DashboardStack() {
             name="tables"
             component={TablesScreen}
             options={({navigation}) => ({
+              ...TransitionPresets.SlideFromRightIOS,
               title: 'Danh Sách Phòng Bàn',
               headerStyle: {
                 backgroundColor: color.primary,
@@ -48,6 +49,7 @@ function DashboardStack() {
             name="Detail"
             component={DetailScreen}
             options={{
+              ...TransitionPresets.SlideFromRightIOS,
               headerShown: false,
             }}
           />
@@ -56,6 +58,7 @@ function DashboardStack() {
             name="Menu"
             component={MenuScreen}
             options={({navigation}) => ({
+              ...TransitionPresets.SlideFromRightIOS,
               title: 'Danh Sách Món',
               headerStyle: {
                 backgroundColor: color.primary,

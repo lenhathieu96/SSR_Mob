@@ -18,7 +18,7 @@ BSEmptyTables.propTypes = {};
 function BSEmptyTables(props) {
   const {chooseSwitchTable} = props;
   const bottomSheetRef = useRef();
-  const height = Dimensions.get('window').height;
+  const height = 0.3 * Dimensions.get('window').height;
 
   const tablesContext = useContext(TablesContext);
 
@@ -27,6 +27,7 @@ function BSEmptyTables(props) {
       ref={bottomSheetRef}
       snapPoints={[height, 0]}
       initialSnap={1}
+      enabledContentGestureInteraction={false}
       renderHeader={() => (
         <SafeAreaView style={styles.BSDetail__Header}>
           <IconButton

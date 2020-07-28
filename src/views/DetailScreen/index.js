@@ -44,7 +44,6 @@ function Detail({route, navigation: {goBack, navigate}}) {
 
   useEffect(() => {
     // check have currentTable
-
     if (
       Object.keys(currentTable).length > 0 &&
       Object.keys(tableDetail).length === 1

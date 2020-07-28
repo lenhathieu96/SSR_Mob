@@ -30,7 +30,7 @@ import styles from './Styles/index.css';
 export default function LoginScreen() {
   const SCREEN_HEIGHT = Dimensions.get('window').height;
   const IMAGE_HEIGHT = 0.5 * SCREEN_HEIGHT;
-  const IMAGE_HEIGHT_SMALL = 0.4 * IMAGE_HEIGHT;
+  const IMAGE_HEIGHT_SMALL = 0.5 * IMAGE_HEIGHT;
 
   const [imageHeight, setImageHeight] = useState(
     new Animated.Value(IMAGE_HEIGHT),
@@ -87,7 +87,7 @@ export default function LoginScreen() {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.Container}>
+    <KeyboardAvoidingView style={styles.Container} keyboardVerticalOffset={10}>
       <ScrollView contentContainerStyle={styles.Container}>
         <SafeAreaView style={styles.LogoWrapper}>
           <Animated.Image source={cover} style={{height: imageHeight}} />
