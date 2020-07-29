@@ -14,7 +14,6 @@ function Body(props) {
   const {tables, chooseSwitchTable} = props;
 
   const emptyTables = tables.filter((table) => Object.keys(table).length === 1);
-  console.log(emptyTables.length);
   return (
     <View style={styles.BSDetail__Body}>
       <FlatList

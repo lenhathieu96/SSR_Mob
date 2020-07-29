@@ -38,13 +38,16 @@ function Menu({route, navigation: {goBack, navigate}}) {
 
   const fetchData = async () => {
     setLoading(true);
-    foodApi.getAllFood().then(async (res) => {
-      console.log(res);
-      // setFilterMenu(res.data);
-      // setSourceMenu(res.data);
-      setLoading(false);
-      // await AsyncStorage.setItem('menu', JSON.stringify(res.data));
+    const allFood = await foodApi.getAllFood().then((res) => {
+      if (res.data) {
+        return res.data;
+      }
+      return res;
     });
+    setFilterMenu(allFood);
+    setSourceMenu(allFood);
+    await AsyncStorage.setItem('menu', JSON.stringify(allFood));
+    setLoading(false);
   };
 
   const search = (text) => {

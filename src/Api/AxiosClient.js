@@ -1,7 +1,7 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 const axiosCLient = axios.create({
-  baseURL: 'http://192.168.1.111:8000',
+  baseURL: 'http://localhost:8000',
   headers: {
     'content-type': 'application/json',
   },
@@ -17,14 +17,12 @@ axiosCLient.interceptors.request.use(async (config) => {
 
 axiosCLient.interceptors.response.use(
   (response) => {
-    console.log(response, 'response axios');
     if (response && response.data) {
       return response.data;
     }
     return response;
   },
   async (error) => {
-    // console.log('error axios');
     const originalRequest = error.config;
     if (error.response.status === 401) {
       const refreshToken = await AsyncStorage.getItem('refreshToken');

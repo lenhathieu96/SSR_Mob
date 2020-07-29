@@ -28,6 +28,7 @@ function BSEmptyTables(props) {
       snapPoints={[height, 0]}
       initialSnap={1}
       enabledContentGestureInteraction={false}
+      enabledInnerScrolling={true}
       renderHeader={() => (
         <SafeAreaView style={styles.BSDetail__Header}>
           <IconButton
