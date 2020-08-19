@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   //search bar
-  input: {
+  searchInput: {
     padding: 10,
     fontSize: fontSize.larger,
     fontFamily: 'MavenPro-Regular',
@@ -45,45 +45,5 @@ const styles = StyleSheet.create({
   itemPrice: {
     fontSize: fontSize.larger,
   },
-  //=============================================================================================
-  //bottom sheet styles
-  BSMenu__Header: {
-    backgroundColor: color.bg,
-    borderTopRightRadius: 20,
-    borderTopLeftRadius: 20,
-    alignItems: 'center',
-  },
-  BSMenu__Body: {
-    backgroundColor: color.bg,
-    flexGrow: 1,
-    padding: 10,
-    height,
-  },
-  BSMenu__Title: {
-    fontSize: fontSize.larger,
-    flex: 0.5,
-    textAlign: 'center',
-  },
-  BSMenu__Number: {
-    fontSize: fontSize.larger,
-    fontWeight: 'bold',
-    color: color.secondary,
-    textAlign: 'center',
-    flex: 0.5,
-  },
-  btnConfirm: {
-    backgroundColor: color.primary,
-    margin: 10,
-  },
-
-  btnQuantity: {
-    alignItems: 'center',
-  },
-
-  btnAdd: {
-    backgroundColor: color.add,
-    marginBottom: 10,
-  },
- 
 });
 export default styles;

@@ -15,13 +15,17 @@ IconButton.propTypes = {
 };
 
 function IconButton(props) {
-  const {onPress, iconName, style, disabled, iconSize} = props;
+  const {onPress, iconName, style, disabled, iconSize, iconColor} = props;
   return (
     <TouchableOpacity
       style={[styles.iconButton, style]}
       onPress={onPress}
       disabled={disabled}>
-      <Icon name={iconName} color={color.primary} size={iconSize} />
+      <Icon
+        name={iconName}
+        color={iconColor ? iconColor : color.primary}
+        size={iconSize}
+      />
     </TouchableOpacity>
   );
 }

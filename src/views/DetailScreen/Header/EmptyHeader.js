@@ -17,7 +17,9 @@ function EmptyHeader(props) {
         style={{alignSelf: 'center'}}
       />
       <BoldText
-        style={{fontSize: fontSize.huge, color: 'white', alignSelf: 'center'}}>
+        style={[
+          {fontSize: fontSize.huge, color: 'white', alignSelf: 'center'},
+        ]}>
         Bàn Trống !
       </BoldText>
     </View>

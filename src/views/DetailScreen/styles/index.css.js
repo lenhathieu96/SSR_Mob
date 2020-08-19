@@ -89,16 +89,6 @@ const styles = StyleSheet.create({
     fontSize: fontSize.large,
     marginRight: 10,
   },
-  // progressTitle: {
-  //   fontSize: fontSize.huge,
-  //   color: 'white',
-  // },
-  // progressDetail: {
-  //   color: color.secondary,
-  //   fontSize: fontSize.larger,
-  //   marginRight: 10,
-  // },
-
   //=============================================================================================
   billList: {
     flexGrow: 1,
@@ -158,40 +148,6 @@ const styles = StyleSheet.create({
   btnChangeTable: {
     backgroundColor: color.add,
     flex: 0.4,
-  },
-
-  //bottom sheet===================================================================================
-  BSDetail__Header: {
-    padding: 10,
-    backgroundColor: color.bg,
-    borderTopRightRadius: 20,
-    borderTopLeftRadius: 20,
-    alignItems: 'center',
-  },
-  BSDetail__Body: {
-    backgroundColor: color.bg,
-    flexGrow: 1,
-    padding: 10,
-    height: windowHeight,
-  },
-  BSDetail__Title: {
-    fontSize: fontSize.huge,
-    color: color.primary,
-  },
-  BSDetail__itemContainer: {
-    padding: 10,
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    borderColor: color.unactive,
-  },
-  BSDetail__itemTitle: {
-    fontSize: fontSize.larger,
-  },
-  BSMenu__Header: {
-    backgroundColor: color.bg,
-    borderTopRightRadius: 20,
-    borderTopLeftRadius: 20,
-    alignItems: 'center',
   },
 });
 export default styles;

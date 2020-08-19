@@ -22,7 +22,7 @@ function ActionBar(props) {
         onPress={() => handleGoBack()}>
         <Icon name="chevron-left" size={22} color="white" />
       </TouchableOpacity>
-      <BoldText style={styles.actionBarTitle}>Bàn {index}</BoldText>
+      <BoldText style={[styles.actionBarTitle]}>Bàn {index}</BoldText>
       <TouchableOpacity style={styles.actionBarBtn} />
     </View>
   );

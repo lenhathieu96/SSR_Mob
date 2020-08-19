@@ -35,7 +35,9 @@ function Header(props) {
       </View>
       <View style={styles.progressContainer}>
         <View style={styles.progressDetailContainer}>
-          <BoldText style={styles.progressTitle}>Quá Trình Thực Hiện</BoldText>
+          <BoldText style={[styles.progressTitle]}>
+            Quá Trình Thực Hiện
+          </BoldText>
 
           <View style={{flexDirection: 'row'}}>
             <Text style={styles.progressDetail}>

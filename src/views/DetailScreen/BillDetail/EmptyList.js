@@ -17,7 +17,7 @@ function EmptyList(props) {
       style={styles.emptyListContainer}
       onPress={() => onNavigate()}>
       <Icon name="plus-circle" size={fontSize.biggest} color="#283593" />
-      <BoldText style={styles.emptyListTitle}>Thêm Món Mới</BoldText>
+      <BoldText style={[styles.emptyListTitle]}>Thêm Món Mới</BoldText>
     </TouchableOpacity>
   );
 }
