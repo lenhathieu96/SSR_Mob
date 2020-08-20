@@ -67,6 +67,7 @@ export default function LoginScreen() {
       Keyboard.removeListener('keyboardWillShow', keyboardWillShow);
       Keyboard.removeListener('keyboardWillHide', keyboardWillHide);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onLogin = async (userAccount) => {
@@ -87,7 +88,7 @@ export default function LoginScreen() {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.Container} keyboardVerticalOffset={10}>
+    <KeyboardAvoidingView style={styles.Container} keyboardVerticalOffset={10} behavior>
       <ScrollView contentContainerStyle={styles.Container}>
         <SafeAreaView style={styles.LogoWrapper}>
           <Animated.Image source={cover} style={{height: imageHeight}} />

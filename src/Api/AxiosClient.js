@@ -1,7 +1,7 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 const axiosCLient = axios.create({
-  baseURL: 'http://localhost:8000',
+  baseURL: 'https://ssrestaurant.herokuapp.com',
   headers: {
     'content-type': 'application/json',
   },
@@ -24,6 +24,7 @@ axiosCLient.interceptors.response.use(
   },
   async (error) => {
     const originalRequest = error.config;
+    console.log(error);
     if (error.response.status === 401) {
       const refreshToken = await AsyncStorage.getItem('refreshToken');
       return axiosCLient
