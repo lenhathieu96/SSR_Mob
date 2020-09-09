@@ -4,7 +4,7 @@ import color from '../../../Utils/Color';
 import * as fontSize from '../../../Utils/fontSize';
 
 const windowWidth = Dimensions.get('window').width;
-const containerSize = windowWidth > 850 ? 0.3 * windowWidth : 0.4 * windowWidth;
+const containerSize = windowWidth > 641 ? 0.3 * windowWidth : 0.4 * windowWidth;
 
 const styles = StyleSheet.create({
   itemTableContainer: {
