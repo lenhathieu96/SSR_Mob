@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {View, Dimensions, TouchableOpacity} from 'react-native';
+import {View, Dimensions, TouchableWithoutFeedback} from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome5';
+
 import Text from '../../../Components/Text';
 import NumberText from '../../../Components/NumberText';
 import IconButton from '../../../Components/IconButton';
@@ -12,69 +14,57 @@ import * as fontSize from '../../../Utils/fontSize';
 import styles from '../styles/index.css';
 import color from '../../../Utils/Color';
 
-ItemBill.propTypes = {
-  item: PropTypes.object.isRequired,
-  created: PropTypes.bool.isRequired,
-  onDeleteItem: PropTypes.func,
-};
-
 function ItemBill(props) {
   const {item, onDeleteItem, selectFood} = props;
   return (
-    <TouchableOpacity
+    <TouchableWithoutFeedback
       onPress={() => {
         if (item.done === 0 && item.served === 0) {
           selectFood(item._id);
         }
       }}>
       <View style={styles.itemBillContainer}>
+        <View>
+          <View style={{flexDirection: 'row'}}>
+            <Text text={item.name} style={styles.itemBillDesc} />
+            <Text style={styles.itemBillQuantity}>
+              {item.served}/{item.quantity}
+            </Text>
+            <NumberText value={item.totalPrice} style={styles.itemBillPrice} />
+            {item.done === 0 && item.served === 0 ? (
+              <IconButton
+                style={styles.btnDelete}
+                iconName="times"
+                iconSize={fontSize.bigger}
+                iconColor={color.red}
+                onPress={() => onDeleteItem(item._id)}
+              />
+            ) : null}
+          </View>
+          {item.note ? (
+            <View style={styles.itemBillNoteContainer}>
+              <Icon name="comment-dots" size={fontSize.small} color="gray" />
+              <Text text={item.note} style={styles.itemBillNote} />
+            </View>
+          ) : null}
+        </View>
         <Progress.Bar
-          style={{justifyContent: 'space-evenly'}}
+          style={styles.progressBar}
           progress={item.served / item.quantity}
+          width={0.9 * Dimensions.get('window').width}
           color={
             item.served / item.quantity === 1 ? color.finish : color.unfinish
           }
-          width={0.9 * Dimensions.get('window').width}
-          height={2.5 * fontSize.biggest}>
-          <View
-            style={{
-              position: 'absolute',
-              flexDirection: 'column',
-              top: 5,
-              left: 5,
-              right: 5,
-            }}>
-            <View style={{flexDirection: 'row'}}>
-              <Text text={item.name} style={styles.itemBillDesc} />
-              <Text style={styles.itemBillQuantity}>
-                {item.served}/{item.quantity}
-              </Text>
-              <NumberText
-                value={item.totalPrice}
-                style={styles.itemBillPrice}
-              />
-              {item.done === 0 && item.served === 0 ? (
-                <IconButton
-                  style={styles.btnDelete}
-                  iconName="trash"
-                  iconSize={fontSize.bigger}
-                  onPress={() => onDeleteItem(item._id)}
-                />
-              ) : null}
-            </View>
-            <Text
-              text={item.note}
-              style={{
-                fontSize: fontSize.large,
-                padding: 10,
-                fontStyle: 'italic',
-              }}
-            />
-          </View>
-        </Progress.Bar>
+        />
       </View>
-    </TouchableOpacity>
+    </TouchableWithoutFeedback>
   );
 }
 
 export default ItemBill;
+
+ItemBill.propTypes = {
+  item: PropTypes.object.isRequired,
+  created: PropTypes.bool.isRequired,
+  onDeleteItem: PropTypes.func,
+};

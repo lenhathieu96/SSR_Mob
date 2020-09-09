@@ -15,7 +15,7 @@ import styles from './styles/index.css';
 
 const BSEmptyTables = React.forwardRef((props, ref) => {
   const {chooseSwitchTable} = props;
-  const height = Dimensions.get('window').height;
+  const height = 0.65 * Dimensions.get('window').height;
 
   const tablesContext = useContext(TablesContext);
 
@@ -24,8 +24,8 @@ const BSEmptyTables = React.forwardRef((props, ref) => {
       ref={ref}
       snapPoints={[height, 0]}
       initialSnap={1}
-      enabledContentGestureInteraction={false}
       enabledInnerScrolling={true}
+      enabledContentGestureInteraction={false}
       renderHeader={() => (
         <SafeAreaView style={styles.BSEmptyTables__Header}>
           <IconButton

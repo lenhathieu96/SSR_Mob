@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {View, Dimensions, Keyboard} from 'react-native';
 
@@ -18,6 +18,8 @@ const BSOrderConfig = React.forwardRef((props, ref) => {
   return (
     <BottomSheet
       ref={ref}
+      enabledInnerScrolling={false}
+      onCloseStart={() => Keyboard.dismiss()}
       snapPoints={[height, 0]}
       renderHeader={() => (
         <View style={styles.BSOrderConfig__Header}>

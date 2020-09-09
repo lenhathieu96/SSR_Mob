@@ -151,6 +151,7 @@ function Menu({route, navigation: {goBack, navigate}}) {
           <TextButton
             text="Hoàn Tất Đặt Món"
             style={styles.btnConfirm}
+            textStyle={{color:'white'}}
             onPress={() => ConfirmOrder()}
           />
         ) : null}

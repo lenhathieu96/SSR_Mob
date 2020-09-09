@@ -105,9 +105,13 @@ const styles = StyleSheet.create({
   },
   //=============================================================================================
   itemBillContainer: {
-    flexDirection: 'column',
-    justifyContent: 'space-between',
+    marginVertical: 10,
     padding: 10,
+    borderRadius: 10,
+    backgroundColor: color.unactive,
+  },
+  progressBar: {
+    marginTop: 10,
   },
   itemBillDesc: {
     fontSize: fontSize.larger,
@@ -129,10 +133,15 @@ const styles = StyleSheet.create({
     color: color.secondary,
     flex: 0.3,
   },
+  itemBillNoteContainer: {
+    paddingVertical: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   itemBillNote: {
+    marginLeft: 10,
     fontStyle: 'italic',
     fontSize: fontSize.normal,
-    marginTop: 10,
   },
   btnDelete: {
     alignItems: 'flex-end',

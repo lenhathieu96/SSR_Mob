@@ -3,11 +3,11 @@ import {View} from 'react-native';
 import Modal from 'react-native-modal';
 import * as Progress from 'react-native-progress';
 
-import * as fontSize from '../../Utils/fontSize';
+import * as fontSize from '../../../Utils/fontSize';
 
-import Text from '../Text';
+import Text from '../../Text';
 
-import color from '../../Utils/Color';
+import color from '../../../Utils/Color';
 import styles from './styles/index.css';
 
 function Loader() {

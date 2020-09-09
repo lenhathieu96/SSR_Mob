@@ -52,8 +52,12 @@ function Header(props) {
           progress={served / orders.length}
           showsText={true}
           formatText={() => Math.round((served / orders.length) * 100) + ' % '}
-          textStyle={{color: 'white', fontFamily: 'MavenPro-Medium'}}
-          color={color.secondary}
+          textStyle={{
+            color: 'white',
+            fontFamily: 'MavenPro-Medium',
+            fontWeight: 'bold',
+          }}
+          color={served / orders.length === 1 ? color.finish : color.unfinish}
           thickness={5}
           strokeCap={'round'}
         />

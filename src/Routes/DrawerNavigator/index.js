@@ -6,7 +6,6 @@ import {
   DrawerItem,
 } from '@react-navigation/drawer';
 import DashBoardStack from './DashboardStack';
-import DetailScreen from '../../Views/DetailScreen';
 import AsyncStorage from '@react-native-community/async-storage';
 
 import {AuthContext} from '../../Contexts/AuthContext';
@@ -29,7 +28,7 @@ function DrawerNavigator() {
         return (
           <DrawerContentScrollView {...props}>
             <DrawerItemList {...props} />
-            <DrawerItem label="Logout" onPress={() => logout()} />
+            <DrawerItem label="Đăng Xuất" onPress={() => logout()} />
           </DrawerContentScrollView>
         );
       }}>
@@ -42,7 +41,7 @@ function DrawerNavigator() {
       />
       <MainDrawer.Screen
         name="Detail"
-        component={DetailScreen}
+        component={DashBoardStack}
         options={{
           title: 'Hỗ Trợ',
         }}

@@ -24,6 +24,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
   },
+  btnConfirm: {
+    backgroundColor: color.primary,
+    margin: 10,
+  },
   loadingText: {
     fontSize: fontSize.large,
     marginTop: 10,

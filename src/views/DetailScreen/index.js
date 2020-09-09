@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import {FlatList, SafeAreaView, View} from 'react-native';
 
-import Loader from '../../Components/Loader';
+import Loader from '../../Components/Modal/Loader';
 import TextButton from '../../Components/TextButton';
 import BSOrderConfig from '../../Components/Bottomsheet/BSOrderConfig';
 import BSEmptyTables from '../../Components/Bottomsheet/BSEmptyTables';
@@ -193,11 +193,13 @@ function Detail({route, navigation: {goBack, navigate}}) {
             }}>
             <TextButton
               text="Cập Nhật"
+              textStyle={{color: 'white'}}
               onPress={() => onUpdateBill()}
               style={styles.btnUpdateBill}
             />
             <TextButton
               text="Chuyển Bàn"
+              textStyle={{color: 'white'}}
               onPress={() => onChangeTable()}
               style={styles.btnChangeTable}
             />
@@ -205,6 +207,7 @@ function Detail({route, navigation: {goBack, navigate}}) {
         ) : (
           <TextButton
             text="Tạo Đơn Hàng"
+            textStyle={{color: 'white'}}
             onPress={() => onCreateBill()}
             style={styles.btncreateBill}
           />

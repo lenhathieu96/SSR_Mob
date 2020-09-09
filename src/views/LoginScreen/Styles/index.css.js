@@ -6,27 +6,28 @@ import color from '../../../Utils/Color';
 const styles = StyleSheet.create({
   Container: {
     flex: 1,
-    backgroundColor: 'white',
   },
   LogoWrapper: {
     padding: 10,
     justifyContent: 'center',
     alignItems: 'center',
   },
+  Title: {
+    fontSize: FontSize.biggest,
+    color: color.primary,
+    textAlign: 'center',
+  },
   formContainer: {
     padding: 10,
-    flex: 0.4,
-    flexGrow: 1,
-    justifyContent: 'space-between',
-    backgroundColor: 'white',
+    justifyContent: 'space-evenly',
+    flexGrow: 0.6,
   },
   inputWrapper: {
     flexDirection: 'row',
     borderBottomWidth: 1,
     borderColor: color.primary,
-    justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 5,
+    flex: 0.2,
   },
   input: {
     flex: 1,
@@ -46,6 +47,7 @@ const styles = StyleSheet.create({
 
   btnLogin: {
     backgroundColor: color.primary,
+    marginBottom: 24,
     flex: 0.1,
   },
   txtBtnLogin: {

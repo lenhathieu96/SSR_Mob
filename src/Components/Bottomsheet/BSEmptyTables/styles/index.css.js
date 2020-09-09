@@ -15,9 +15,7 @@ const styles = StyleSheet.create({
   },
   BSEmptyTables__Body: {
     backgroundColor: color.bg,
-    flexGrow: 1,
     padding: 10,
-    height: windowHeight,
   },
   BSEmptyTables__Title: {
     fontSize: fontSize.huge,

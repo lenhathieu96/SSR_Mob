@@ -6,13 +6,7 @@ import {BoldText} from '../../../Components/Text';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
-import Loader from '../../../Components/Loader';
-
 import styles from '../styles/index.css';
-
-TableList.propTypes = {
-  listTable: PropTypes.array.isRequired,
-};
 
 function TableItem(props) {
   const {tableDetail} = props;
@@ -48,5 +42,9 @@ function TableList(props) {
     </View>
   );
 }
+
+TableList.propTypes = {
+  listTable: PropTypes.array.isRequired,
+};
 
 export default TableList;
