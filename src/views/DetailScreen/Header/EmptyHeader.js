@@ -3,11 +3,10 @@ import {View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 import {BoldText} from '../../../Components/Text';
-
 import * as fontSize from '../../../Utils/fontSize';
 import styles from '../styles/index.css';
 
-function EmptyHeader(props) {
+function EmptyHeader() {
   return (
     <View style={styles.headerEmptyContainer}>
       <Icon

@@ -62,12 +62,13 @@ const styles = StyleSheet.create({
     flex: 0.4,
     flexDirection: 'column',
     justifyContent: 'space-evenly',
+    padding: 10,
   },
   money: {
     fontWeight: 'bold',
     color: color.secondary,
     fontSize: fontSize.bigger,
-    padding: 5,
+    marginVertical: 10,
   },
   progressContainer: {
     flex: 0.4,

@@ -2,7 +2,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {View} from 'react-native';
-import * as Progress from 'react-native-progress';
+
+import {Circle} from 'react-native-progress';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
 import Text, {BoldText} from '../../../Components/Text';
 import NumberText from '../../../Components/NumberText';
@@ -30,7 +32,7 @@ function Header(props) {
 
         <View style={{flexDirection: 'row'}}>
           <NumberText value={totalPrice} style={styles.money} />
-          <Text style={styles.money}>VNĐ</Text>
+          <Text style={styles.money}> VNĐ</Text>
         </View>
       </View>
       <View style={styles.progressContainer}>
@@ -43,24 +45,33 @@ function Header(props) {
             <Text style={styles.progressDetail}>
               {served} / {orders.length}
             </Text>
-            <Text style={styles.desc}>Món đã được phục vụ</Text>
+            <Text style={styles.desc}>Đơn hàng đã được phục vụ</Text>
           </View>
         </View>
-
-        <Progress.Circle
-          size={2.5 * fontSize.biggest}
-          progress={served / orders.length}
-          showsText={true}
-          formatText={() => Math.round((served / orders.length) * 100) + ' % '}
-          textStyle={{
-            color: 'white',
-            fontFamily: 'MavenPro-Medium',
-            fontWeight: 'bold',
-          }}
-          color={served / orders.length === 1 ? color.finish : color.unfinish}
-          thickness={5}
-          strokeCap={'round'}
-        />
+        {served / orders.length === 1 ? (
+          <Icon
+            name="check-circle"
+            size={2.3 * fontSize.biggest}
+            color={color.finish}
+          />
+        ) : (
+          <Circle
+            size={2.5 * fontSize.biggest}
+            progress={served / orders.length}
+            showsText={true}
+            formatText={() =>
+              Math.round((served / orders.length) * 100) + ' % '
+            }
+            textStyle={{
+              color: 'white',
+              fontFamily: 'MavenPro-Medium',
+              fontWeight: 'bold',
+            }}
+            color={color.unfinish}
+            thickness={5}
+            strokeCap={'round'}
+          />
+        )}
       </View>
     </View>
   );
