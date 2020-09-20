@@ -25,7 +25,6 @@ function TablesScreen() {
       .map((item, index) => ({...item, Table: index + 1}));
     socket.emit('allBill');
     socket.on('allBillResult', (bills) => {
-      //
       let tempTables = [...tables];
       //have bills not payed yet
       if (bills.length > 0) {

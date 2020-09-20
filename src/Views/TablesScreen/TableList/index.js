@@ -27,12 +27,12 @@ function TableItem(props) {
 }
 
 function TableList(props) {
-  const windowWidth = Dimensions.get('window').width;
+  const deviceWidth = Dimensions.get('window').width;
   const {listTable} = props;
   return (
     <View style={styles.TableListContainer}>
       <FlatList
-        numColumns={windowWidth > 850 ? 3 : 2}
+        numColumns={deviceWidth >= 641 ? 3 : 2}
         data={listTable}
         renderItem={({item}) => <TableItem tableDetail={item} />}
         keyExtractor={(item) => item.Table}
